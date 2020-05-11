@@ -1,0 +1,211 @@
+
+@media (max-width: 550px){
+    .register_player_column_layout_one {
+            padding: 0 .75rem;
+            width: 100%;
+    }
+}
+
+@media (max-width: 900px){
+    .register_player_column_layout_one {
+        padding: 0 0.5rem;
+        width: 100%;
+    }
+}
+
+.register_player_column_layout_one {
+    width: 52.5rem;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+ }
+ .register_player_Twocolumn_layout_two{
+    display: flex;
+    align-items: flex-start;
+ }
+
+ *{
+    padding:0;
+    margin:0;
+    box-sizing:border-box;
+  }
+  
+  .register_wrapper{
+      display: -webkit-flex;
+      display: flex;
+      height: 100%;
+      margin-top: 2%;
+    }
+    
+
+  .myForm{
+  /*   border:solid black; */
+    background-color:white;
+    margin:15px auto;
+    flex-direction:column;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+    width:25%;
+    min-width:400px;
+    border-radius:5px;
+    height:450px;     
+  }
+  
+  
+  
+  .formElement{
+  /*   border:solid black; */
+  /*   flex-basis:100%; */
+    width:90%;
+  }
+  
+  
+  
+  .formInstructionsDiv{
+    width:90%;
+    padding:15px 0;
+    background-color:#f8e76e;
+    border-radius:5px;
+    border-bottom: solid #f8e76e; 
+   
+  }
+  
+  .formInstructionsDiv h2{
+    margin-left:1%;
+    font-size:3em;
+    font-family:"ebrima";
+    font-weight:lighter;
+  }
+  
+  .formInstructionsDiv p{
+    margin-left:1%;
+    font-size:1em;
+    font-family: "ebrima";
+  }
+  .fillContentDiv{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    flex-grow:1;
+    margin-top:40px;
+    margin-bottom: 50px;
+    height:380px;
+  }
+  
+  .formContentElement{
+    min-width:100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .names{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+  
+  }
+  
+  .names .inputRequest{
+    width: 47.5%;
+    min-width:150px;
+  }
+  
+  
+  .inputRequest{
+  /*   margin-bottom:20px; */
+    padding:15px;
+    font-size:1.2em;
+    background-color: #f2f2f2;
+    border-style:none;
+    border-radius:5px;
+  }
+  
+  .inputRequest:focus{
+    border-style:solid;
+    border-width:3px;
+    border-color: #0d6380;
+  }
+  
+  
+  .submitButton{
+    width:40%;
+    height:100%;
+    background-color: #0099cc;
+    border-style:none;
+    color:white;
+    font-size:1.2em;
+    font-weight:800;
+    cursor:pointer;
+    border-radius:5px;
+  }
+  
+  .submitButton:hover{
+    background-color:#1cacdd;
+  }
+  .submitButtonDiv{
+    grow:1;
+    height:45px;
+  /*   padding-bottom:40px; */
+    margin-bottom:20px;
+    
+  }
+  
+
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #f2f2f2;
+    background-image: none;
+    font-family:"ebrima";
+    font-size:1em;
+  }
+  /* Remove IE arrow */
+  select::-ms-expand {
+    display: none;
+  }
+  /* Custom Select */
+  .select {
+    position: relative;
+    display: flex;
+    height: 3em;
+    line-height: 3;
+    background: #f2f2f2;
+    overflow: hidden;
+    border-radius: .25em;
+    font-family:"ebrima";
+    font-size:1em;
+  }
+  select {
+    flex: 1;
+    padding: 0 .5em;
+    color: rgb(57, 59, 136);
+    cursor: pointer;
+    font-size:1em;
+    font-family:"ebrima";
+  }
+  /* Arrow */
+  .select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #8882e7;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+    font-size:1em;
+    font-family:"ebrima";
+  }
+  /* Transition */
+  .select:hover::after {
+    color: #f39c12;
+  }
