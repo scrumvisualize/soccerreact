@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import './CSSModules/home.css';
 import './CSSModules/register.css';
@@ -10,21 +10,20 @@ import Login from './components/Login';
 import Aboutus from './components/Aboutus';
 import Navigation from './components/Navigation';
 
-class App extends React.Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <div>
-          <Navigation />
-            <Switch>
-             <Route path="/" component={Home} exact/>
-             <Route path="/register" component={Register}/>
-             <Route path="/login" component={Login}/>
-             <Route path="/aboutus" component={Aboutus}/>
-           </Switch>
-        </div> 
-      </BrowserRouter>
-    );
-  }
+const App = () => {
+  return (
+    <BrowserRouter>
+      <div>
+        <Navigation />
+        <Switch>
+          <Route path="/" component={Home} exact />
+          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
+          <Route path="/aboutus" component={Aboutus} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  );
 }
+
 export default App;
