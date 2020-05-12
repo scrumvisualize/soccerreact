@@ -16,7 +16,6 @@ const Login = () => {
               <label>
                 <input className="inputRequest formContentElement" type="password" placeholder="Password" />
               </label>
-
             </div>
             <div className="loginsubmitButtonDiv formElement">
               <button className="submitButton">Login</button>

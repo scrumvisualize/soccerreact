@@ -51,7 +51,7 @@
     text-align: center;
     margin-top: 10px;
     margin-left: 7px;
-    background-color: #d3d7db;
+    background-color: #f8e76e;
     
   }
   .playerProfilePic_home_tile{
@@ -64,3 +64,26 @@
     font-size: 15px;
     text-align: center;
   }
+.playerProfile_grid_border{
+  
+}
+.playerSearch_Home{
+  width: 230px !important;
+  height:28px;
+  margin: 0 auto;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #ededed;
+  width: 100%;
+  box-shadow: 0 5px 30px rgba(156,160,171,.25);
+  border-radius: 2px;
+}
+.playerSearch_Home_Input{
+  border: 0;
+  outline: none;
+}
+.playerSearch_Icon{
+  float: left;
+  padding-left: 7px;
+  padding-top: 5px;
+}
