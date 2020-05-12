@@ -88,7 +88,7 @@
     flex-direction:column;
     justify-content:space-between;
     flex-grow:1;
-    margin-top:40px;
+    margin-top:20px;
     margin-bottom: 50px;
     height:380px;
   }
@@ -209,3 +209,18 @@
   .select:hover::after {
     color: #f39c12;
   }
+.previewProfilePic{
+  margin-left: 150px;
+}
+.formTitle{
+  color: #0f0f0f;
+  text-align: center;
+  padding-bottom: 5px;
+}
+.instructionsText{
+  color: #6dd47e;
+  text-align: center;
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
