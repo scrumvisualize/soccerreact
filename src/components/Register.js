@@ -1,14 +1,20 @@
 import React, { useState } from "react";
+import axios from 'axios';
+import RegisterService from '../services/RegisterService';
 
 
 const Register = () => {
 
   const [picture, setPicture, setImage] = useState('');
+  const [register, setRegister] = useState({ _id: '', profileImage: '', firstName: '', lastName: '', selectRole: ''})
+
+
   const onChangePicture = e => {
     console.log('picture: ', picture);
     //setPicture(e.target.files[0]);
     if (e.target.files.length) {
       setPicture(URL.createObjectURL(e.target.files[0]));
+      setRegister({...register, [e.target.name]: e.target.value});
     } else {
       return false;
     }
@@ -18,25 +24,42 @@ const Register = () => {
     e.target.src = '/images/default-icon.png';
   }
   
+  const onChange = (e) => {
+    e.persist();
+    setRegister({...register, [e.target.name]: e.target.value});
+    }
+
+  const handleSubmit = (e) => {
+   e.preventDefault()
+   RegisterService.create(register)
+       .then(function (response) {
+        console.log(response)
+       })
+       .catch(function (error) {
+        console.log(error)
+        console.log("Check if server getting this log here..")
+     }) 
+  }
+
   return (
     <div className="register_wrapper">
       <div className="register_player_column_layout_one">
         <div className="register_player_Twocolumn_layout_two">
-          <form className="myForm">
+          <form onSubmit={handleSubmit} className="myForm">
             <div className="formInstructionsDiv formElement">
               <h2 className="formTitle" >Sign Up</h2>
               <p className="instructionsText">Not registered yet, please register now !</p>
               <div className="register_profile_image">
-                <input id="profilePic" type="file" onChange={onChangePicture} />
+                <input id="profilePic" name="profileImage"  type="file" onChange={onChangePicture} />
               </div>
               <div className="previewProfilePic" >
-                <img onError={addDefaultSrc} className="playerProfilePic_home_tile" src={picture}></img>
+                <img onError={addDefaultSrc} name="previewImage"  className="playerProfilePic_home_tile" src={picture}></img>
               </div>
             </div>
             <div className="fillContentDiv formElement">
               <div className="names formContentElement">
-                <input className="inputRequest " type="text" placeholder="First Name" />
-                <input className="inputRequest " type="text" placeholder="Last Name" />
+                <input className="inputRequest " name="firstName" type="text" placeholder="First Name" onChange={onChange}/>
+                <input className="inputRequest " name="lastName"  type="text" placeholder="Last Name" onChange={onChange}/>
               </div>
               <label>
                 <input className="inputRequest formContentElement" type="text" placeholder="Email" />
@@ -46,7 +69,7 @@ const Register = () => {
               </label>
               <label>
                 <div className="select" >
-                  <select name="selectRole" id="select">
+                  <select name="selectRole" id="select" onChange={onChange}>
                     {/*<option selected disabled>Choose an option</option> */}
                     <option value="member">Member</option>
                     <option value="admin">Admin</option>
@@ -58,7 +81,7 @@ const Register = () => {
               </label>
             </div>
             <div className="submitButtonDiv formElement">
-              <button className="submitButton">Register</button>
+              <button type="submit" className="submitButton">Register</button>
             </div>
           </form>
         </div>

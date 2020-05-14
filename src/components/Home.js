@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 
 const playerList = [
-  { image: '/images/person.png', name: 'Player 1', position: "Forward" },
-  { image: '/images/person.png', name: 'Player 2', position: "Defense" },
-  { image: '/images/person.png', name: 'Player 3', position: "Mid Fielder" },
-  { image: '/images/person.png', name: 'Player 4', position: "Forward" }
+  { image: '/images/person.png', name: 'Dan', position: "Forward" },
+  { image: '/images/person.png', name: 'Arun', position: "Defense" },
+  { image: '/images/person.png', name: 'Trent', position: "Mid Fielder" },
+  { image: '/images/person.png', name: 'Celta', position: "Forward" },
+  { image: '/images/person.png', name: 'Eggie', position: "Defense" },
+  { image: '/images/person.png', name: 'Rant', position: "Mid Fielder" },
+  { image: '/images/person.png', name: 'Ruben', position: "Defense" },
 ];
 
 
@@ -19,7 +22,8 @@ const Home = () => {
   };
   useEffect(() => {
     const results = playerList.filter(player =>
-      player.name.toLowerCase().includes(searchTerm) || player.position.toLowerCase().includes(searchTerm)
+      player.name.toLowerCase().includes(searchTerm) || player.name.toUpperCase().includes(searchTerm) || player.position.toLowerCase().includes(searchTerm) 
+      || player.position.toUpperCase().includes(searchTerm)
     );
     setSearchResults(results);
   }, [searchTerm]);

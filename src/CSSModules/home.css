@@ -65,7 +65,8 @@
     text-align: center;
   }
 .playerProfile_grid_border{
-  
+  width: 100%;
+
 }
 .playerSearch_Home{
   width: 230px !important;
@@ -87,3 +88,33 @@
   padding-left: 7px;
   padding-top: 5px;
 }
+
+.playerSearch_Home {
+  width: 230px !important;
+  height: 28px;
+  margin: 0 auto;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #ededed;
+  width: 100%;
+  box-shadow: 0 5px 30px rgba(156,160,171,.25);
+  border-radius: 2px;
+}
+
+@media only screen and (min-width: 1680px) { 
+
+  .playerSearch_Home {
+    width: 500px !important;
+    height: 35px;
+    margin: 0 auto;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #ededed;
+    width: 100%;
+    box-shadow: 0 5px 30px rgba(156,160,171,.25);
+    border-radius: 2px;
+    padding-top: 5px;
+    margin-top: 5px;
+  }
+  
+ }
