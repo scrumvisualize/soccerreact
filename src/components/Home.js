@@ -16,7 +16,7 @@ const Home = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
+  
   const handleChange = event => {
     setSearchTerm(event.target.value);
   };
@@ -42,6 +42,7 @@ const Home = () => {
             </div>
           </label>
         </div>
+        {!searchResults.length  && (<div> <p className="noSearchData"> No results available..! </p> </div>) }
         <div className="playerList_home_page">
           <div className="grid-container">
             {
@@ -61,6 +62,7 @@ const Home = () => {
             }
           </div>
         </div>
+        
       </div>
     </div>
   );
