@@ -18,17 +18,12 @@
   
   /* etc */
   
- 
-  .container {
-    max-width: 60em;
-    margin-right: auto;
-    margin-left: auto;
-  }
-  
   .col {
+    width:100%;
     padding: 1em;
-    margin: 0 2px 2px 0;
-    background: #b3e888;
+    margin: 0 50px 50px 0;
+    margin-left: 10px;
+    margin-right: 10px;
   }
   
   .middlerrowData{
