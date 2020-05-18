@@ -7,7 +7,7 @@ const Aboutus = () => {
             </div>
             <div className="layout">
               <span className="col col-main">
-                Data Column 1
+              <img src="/images/image-1.jpg"></img>
               </span> 
               <span className="col col-complementary">
                 Recent News
