@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
-
-const playerList = [
-  { image: '/images/person.png', name: 'Dan', position: "Forward" },
-  { image: '/images/person.png', name: 'Arun', position: "Defense" },
-  { image: '/images/person.png', name: 'Trent', position: "Mid Fielder" },
-  { image: '/images/person.png', name: 'Celta', position: "Forward" },
-  { image: '/images/person.png', name: 'Eggie', position: "Defense" },
-  { image: '/images/person.png', name: 'Rant', position: "Mid Fielder" },
-  { image: '/images/person.png', name: 'Ruben', position: "Defense" },
-];
+import Axios from "axios";
 
 
 const Home = () => {
-
+  const [playerList, setPlayerList]=useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   
   const handleChange = event => {
     setSearchTerm(event.target.value);
   };
+  useEffect(()=>{
+   const fetchData = async() => {
+    try{
+    const res =  await Axios.get('http://localhost:8000/service/players');
+    setPlayerList(res.data.players);
+    setSearchResults(res.data.players);
+    }catch(e){
+      console.log(e);
+    }
+  }
+    fetchData();
+  },[]);
   useEffect(() => {
     const results = playerList.filter(player =>
       player.name.toLowerCase().includes(searchTerm) || player.name.toUpperCase().includes(searchTerm) || player.position.toLowerCase().includes(searchTerm) 
@@ -46,19 +48,17 @@ const Home = () => {
         <div className="playerList_home_page">
           <div className="grid-container">
             {
-              searchResults.map(player => {
-                return (
-                  <div className="grid-item">
+              searchResults.map(({id,image,position,name}) =>(
+                  <div key={id} className="grid-item">
                     <div>
-                      <img className="playerProfilePic_home_tile" key={player.image} src={player.image}></img>
+                      <img className="playerProfilePic_home_tile" key={image} src={image}></img>
                     </div>
                     <div className="playerProfile_grid_border">
-                      <h3 key={player.name}>{player.name}</h3>
-                      <span className="playerPosition_home_tile" key={player.position}>{player.position}</span>
+                      <h3 key={name}>{name}</h3>
+                      <span className="playerPosition_home_tile" key={position}>{position}</span>
                     </div>
                   </div>
-                );
-              })
+                ))
             }
           </div>
         </div>
