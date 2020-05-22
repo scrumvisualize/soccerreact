@@ -54,8 +54,10 @@ const Home = () => {
                       <img className="playerProfilePic_home_tile" key={image} src={image}></img>
                     </div>
                     <div className="playerProfile_grid_border">
-                      <h3 key={name}>{name}</h3>
-                      <span className="playerPosition_home_tile" key={position}>{position}</span>
+                      <span className="rec_name_position_data">
+                        <h3 key={name}>{name}</h3>
+                        <span className="playerPosition_home_tile" key={position}>{position}</span>
+                      </span>
                     </div>
                   </div>
                 ))

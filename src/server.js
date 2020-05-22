@@ -44,6 +44,11 @@ app.post('/service/login', (req, res) => {
   console.log('service/login');
   res.json({ express: "login" })
 });
+//added to test and see client/server interaction:
+app.post('/service/news', (req, res) => {
+  console.log(req.body.newstitle);
+  res.json({ express: "news" })
+});
 
 
 // console.log that your server is up and running

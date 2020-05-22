@@ -86,6 +86,9 @@ const Register = () => {
           </form>
         </div>
       </div>
+      <div className="soccerField_Register">
+        <img src="/images/ground-2.png"></img>
+      </div>
     </div>
   );
 }
