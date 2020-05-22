@@ -87,7 +87,7 @@ const Register = () => {
         </div>
       </div>
       <div className="soccerField_Register">
-        <img src="/images/ground-2.png"></img>
+        <img src=""></img>
       </div>
     </div>
   );
