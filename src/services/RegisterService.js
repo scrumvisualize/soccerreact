@@ -1,8 +1,5 @@
 import http from "../http-common";
 
-const get = id => {
-  return http.get(`/register/${id}`);
-};
 
 const create = data => {
   console.log("Hello: this is create call from Register");

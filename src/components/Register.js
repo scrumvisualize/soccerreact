@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import axios from 'axios';
 import RegisterService from '../services/RegisterService';
 
 
 const Register = () => {
 
-  const [picture, setPicture, setImage] = useState('');
+  const [picture, setPicture] = useState('');
   const [register, setRegister] = useState({ _id: '', profileImage: '', firstName: '', lastName: '', selectRole: ''})
 
 
@@ -53,7 +52,7 @@ const Register = () => {
                 <input id="profilePic" name="profileImage"  type="file" onChange={onChangePicture} />
               </div>
               <div className="previewProfilePic" >
-                <img onError={addDefaultSrc} name="previewImage"  className="playerProfilePic_home_tile" src={picture}></img>
+                <img alt="" Error={addDefaultSrc} name="previewImage"  className="playerProfilePic_home_tile" src={picture}></img>
               </div>
             </div>
             <div className="fillContentDiv formElement">

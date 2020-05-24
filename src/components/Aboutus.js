@@ -24,7 +24,7 @@ const Aboutus = () => {
             </div>
             <div className="layout">
               <span className="col col-main">
-              <img src="/images/image-1.jpg"></img>
+              <img alt="" src="/images/image-1.jpg"></img>
               </span> 
               <span className="col col-complementary">
                 <h3>Recent News:</h3>
