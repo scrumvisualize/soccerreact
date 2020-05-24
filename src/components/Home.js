@@ -28,7 +28,7 @@ const Home = () => {
       || player.position.toUpperCase().includes(searchTerm)
     );
     setSearchResults(results);
-  }, [searchTerm]);
+  }, [searchTerm,playerList]);
 
   return (
     <div className="App">
@@ -38,7 +38,7 @@ const Home = () => {
           <label>
             <div className="playerSearch_Home">
               <div className="playerSearch_Icon">
-                <img src="/images/search-image-player.jpg"></img>
+                <img alt="" src="/images/search-image-player.jpg"></img>
               </div>
               <input type="text" className="playerSearch_Home_Input" placeholder="Search players..." value={searchTerm} onChange={handleChange} />
             </div>
@@ -51,7 +51,7 @@ const Home = () => {
               searchResults.map(({id,image,position,name}) =>(
                   <div key={id} className="grid-item">
                     <div>
-                      <img className="playerProfilePic_home_tile" key={image} src={image}></img>
+                      <img alt="" className="playerProfilePic_home_tile" key={image} src={image}></img>
                     </div>
                     <div className="playerProfile_grid_border">
                       <h3 key={name}>{name}</h3>

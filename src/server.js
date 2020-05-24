@@ -1,9 +1,35 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-const dbrepository = require("sequelize");
+const {Sequelize, DataTypes} = require("sequelize");
+
+const userSchema = require('./server/models/user');
 const cors = require("cors");
+
 const port = 8000;
+const DB_NAME = 'soccerreact';
+const DB_PORT = 3306;
+const DB_USERNAME = 'admin';
+const DB_PASSWORD = 'C@rnagieMe11on';
+const DB_HOST = 'localhost';
+const DB_DIALECT = 'mysql';
+const DB_POOL = {
+  max: 5,
+  min: 0,
+  acquire: 30000,
+  idle: 10000
+};
+
 const app = express();
+
+const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
+  host: DB_HOST,
+  dialect: DB_DIALECT,
+  pool: DB_POOL,
+  port:DB_PORT
+});
+
+const UserModel = userSchema(sequelize, DataTypes);
+
 
 app.use(cors({
   origin: "http://localhost:3000"
@@ -11,18 +37,16 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/service/players', (req, res) => {
-  res.status(200).json({
-    players: [
-      { image: '/images/person.png', name: 'Dan', position: "Forward" },
-      { image: '/images/person.png', name: 'Arun', position: "Defense" },
-      { image: '/images/person.png', name: 'Trent', position: "Mid Fielder" },
-      { image: '/images/person.png', name: 'Celta', position: "Forward" },
-      { image: '/images/person.png', name: 'Eggie', position: "Defense" },
-      { image: '/images/person.png', name: 'Rant', position: "Mid Fielder" },
-      { image: '/images/person.png', name: 'Ruben', position: "Defense" },
-    ]
-  })
+
+app.get('/service/players', async(req, res) => {
+  try{
+    const players = await UserModel.findAll({where:{privilege:'PLAYER'}});
+    res.status(200).json({players});
+  }catch(e){
+    res.status(500).json({message:e.message});
+  }
+
+
 });
 app.put('/service/player', (req, res) => {
   console.log('service/player');
@@ -46,5 +70,12 @@ app.post('/service/login', (req, res) => {
 });
 
 
-// console.log that your server is up and running
+(async()=>{
+  try{
+    const sequelizeStatus = await sequelize.sync();
+ console.log("your server is up and running");
 app.listen(port, () => console.log(`Listening on port ${port}`));
+  }catch(e){
+    console.log(e,'Database issue.');
+  }
+})();
