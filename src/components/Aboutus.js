@@ -3,8 +3,8 @@ import Axios from "axios";
 
 const Aboutus = () => {
 
-  const [newstitle, setNewsTitle]=useState([]);
-  const [newsdetails, setNewsDetails]=useState([]);
+  const [newsTitle, setNewsTitle]=useState([]);
+  const [newsDetails, setNewsDetails]=useState([]);
   const [isSent, setIsSent] = useState(false);
 
   const thankYouMessage = <p>Thank you for your input!</p>
@@ -14,8 +14,10 @@ const Aboutus = () => {
     e.preventDefault()
     fetch('http://localhost:3000/service/news', {
       method: 'POST',
-      body: JSON.stringify({ newstitle, newsdetails })
+      body: JSON.stringify({ newsTitle, newsDetails })
     }).then(() => setIsSent(true))
+    setNewsTitle('');
+    setNewsDetails('');
   }
   return (
           <div className="container">
@@ -29,8 +31,8 @@ const Aboutus = () => {
               <span className="col col-complementary">
                 <h3>Recent News:</h3>
                 <span className="newsPlace">
-                  <b>{newstitle}</b><br/>
-                  <span>{newsdetails}</span>
+                  <b>{newsTitle}</b><br/>
+                  <span>{newsDetails}</span>
                 </span>
                 <span className="newsPlace">Add some news </span>
               </span>  
@@ -66,11 +68,11 @@ const Aboutus = () => {
                   <form onSubmit={handleSubmit} className="myForm">
                     <div className="loginfillContentDiv formElement">
                       <label>
-                        <input name="newstitle"  className="inputRequest formContentElement" type="text" placeholder="Title" 
+                        <input name="newstitle"  className="inputRequest formContentElement" type="text"  value={newsTitle} placeholder="Title" 
                         onChange={e => setNewsTitle(e.target.value)}/>
                       </label>
                       <label>
-                        <textarea name="newsdetails" className="inputRequest formContentElement" type="textarea" placeholder="News details" 
+                        <textarea name="newsdetails" className="inputRequest formContentElement" type="textarea" value={newsDetails} placeholder="News details" 
                         onChange={e => setNewsDetails(e.target.value)}/>
                       </label>
                     </div>

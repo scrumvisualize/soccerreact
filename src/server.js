@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-const {Sequelize, DataTypes} = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 
 const userSchema = require('./server/models/user');
 const cors = require("cors");
@@ -25,7 +25,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
   host: DB_HOST,
   dialect: DB_DIALECT,
   pool: DB_POOL,
-  port:DB_PORT
+  port: DB_PORT
 });
 
 const UserModel = userSchema(sequelize, DataTypes);
@@ -38,19 +38,28 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.get('/service/players', async(req, res) => {
-  try{
-    const players = await UserModel.findAll({where:{privilege:'PLAYER'}});
-    res.status(200).json({players});
-  }catch(e){
-    res.status(500).json({message:e.message});
+app.get('/service/players', async (req, res) => {
+  try {
+    const players = await UserModel.findAll({ where: { privilege: 'PLAYER' } });
+    res.status(200).json({ players });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
   }
 
 
 });
-app.put('/service/player', (req, res) => {
-  console.log('service/player');
-  res.json({ express: "add player" })
+
+// Modified the put method to check whether the insert of player is working:
+app.put('/service/player', async (req, res, next) => {
+  try {
+    const addPlayer = await UserModel.create(req.body);
+    console.log("Server side log Put working:" + addPlayer);
+    return res.json({ addPlayer });
+  } catch (err) {
+    return next(err);
+  }
+  //console.log('service/player');
+  //res.json({ express: "add player" })
 });
 app.delete('/service/player', (req, res) => {
   console.log('service/player');
@@ -75,12 +84,12 @@ app.post('/service/news', (req, res) => {
 });
 
 
-(async()=>{
-  try{
+(async () => {
+  try {
     const sequelizeStatus = await sequelize.sync();
- console.log("your server is up and running");
-app.listen(port, () => console.log(`Listening on port ${port}`));
-  }catch(e){
-    console.log(e,'Database issue.');
+    console.log("your server is up and running");
+    app.listen(port, () => console.log(`Listening on port ${port}`));
+  } catch (e) {
+    console.log(e, 'Database issue.');
   }
 })();
