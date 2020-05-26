@@ -38,6 +38,18 @@
     position: relative;
 }
 
+
+@media (min-width: 1280px) { 
+  .grid-container {
+    margin-top: 1%;
+    display: grid;
+    grid-template-columns: auto auto auto auto !important;
+    padding : 5px 10px 5px 10px;
+    position: relative;
+   
+  }
+
+}
 .grid-container {
     margin-top: 1%;
     display: grid;

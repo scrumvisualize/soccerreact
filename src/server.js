@@ -65,9 +65,15 @@ app.delete('/service/player', (req, res) => {
   console.log('service/player');
   res.json({ express: "delete player" })
 });
-app.get('/service/profile', (req, res) => {
-  console.log('service/profile');
-  res.json({ express: "player profile" })
+app.get('/service/profile', async (req, res) => {
+  try {
+    const playerProfile = await UserModel.findAll({ where: { email: 'david@testmail.com' } });
+    res.status(200).json({ playerProfile });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+  //console.log('service/profile');
+  //res.json({ express: "player profile" })
 });
 app.post('/service/profile', (req, res) => {
   console.log('service/profile');

@@ -7,6 +7,7 @@ const Navigation = () => {
             <div className="wrapper">
                 <nav className="siteNavigation_nav_links">
                     <NavLink className="mobile_register_link" to="/">Home</NavLink>
+                    <NavLink className="mobile_register_link" to="/profile">Profile</NavLink>
                     <NavLink className="mobile_register_link" to="/register">Register</NavLink>
                     <NavLink className="mobile_login_link" to="/login">Login</NavLink>
                     <NavLink className="mobile_login_link" to="/aboutus">About us</NavLink>

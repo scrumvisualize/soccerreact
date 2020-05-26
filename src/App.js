@@ -11,6 +11,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Aboutus from './components/Aboutus';
 import Navigation from './components/Navigation';
+import Profile from './components/Profile';
 
 var ReactDOM = require('react-dom');
 const App = () => ( <BrowserRouter>
@@ -18,6 +19,7 @@ const App = () => ( <BrowserRouter>
     <Navigation />
     <Switch>
       <Route exact path="/" component={Home} />
+      <Route path="/profile" component={Profile} />
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
       <Route path="/aboutus" component={Aboutus} />

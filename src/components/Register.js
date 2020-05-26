@@ -42,6 +42,7 @@ const Register = () => {
     axios.put('http://localhost:8000/service/player', register)
       .then(function (response) {
         console.log(response)
+        setRegister('');
       })
       .catch(function (error) {
         console.log(error)
