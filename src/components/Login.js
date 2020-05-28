@@ -1,24 +1,60 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from "react";
+import Axios from "axios";
 
 const Login = () => {
+
+  const [loginData, setLoginData] = useState([]);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [helperText, setHelperText] = useState('');
+  const [value, setValue] = React.useState('');
+  const [error, setError] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const fetchData = async () => {
+      try {
+        const res = await Axios.post('http://localhost:8000/service/login', { email , password });
+        setLoginData(res.data.loginData); 
+          if (email === res.data.loginData[0].email && password === res.data.loginData[0].password) {
+            setError(false);
+            setHelperText('Login Successfully !');
+            localStorage.setItem('userPrivelege', res.data.loginData[0].privilege);
+            setValue(res.data.loginData[0].privilege);
+        } else {
+            setError(true);
+            setHelperText('Incorrect Email or Password..!')
+          }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchData();
+  };
+
   return (
     <div className="login_wrapper">
       <div className="login_player_column_layout_one">
         <div className="login_player_Twocolumn_layout_two">
-          <form className="myForm">
+          <form onSubmit={handleSubmit} className="myForm">
             <div className="formInstructionsDiv formElement">
-              <h2 className="formTitle" >Login</h2>
+              <h2 className="formTitle">Login</h2>
             </div>
             <div className="loginfillContentDiv formElement">
               <label>
-                <input className="inputRequest formContentElement" type="text" placeholder="Email" />
+                <input  className="inputRequest formContentElement" type="text" placeholder="Email"  
+                onChange={(e)=>setEmail(e.target.value)}/>
               </label>
               <label>
-                <input className="inputRequest formContentElement" type="password" placeholder="Password" />
+                <input className="inputRequest formContentElement" type="password" placeholder="Password"
+                onChange={(e)=>setPassword(e.target.value)}/>
+              </label>
+              <label>
+                <span className="loginValidationText">{helperText}</span>
               </label>
             </div>
             <div className="loginsubmitButtonDiv formElement">
-              <button className="submitButton">Login</button>
+              <button type="submit" className="submitButton">Login</button>
             </div>
           </form>
         </div>

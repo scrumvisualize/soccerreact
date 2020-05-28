@@ -46,7 +46,6 @@ app.get('/service/players', async (req, res) => {
     res.status(500).json({ message: e.message });
   }
 
-
 });
 
 // Modified the put method to check whether the insert of player is working:
@@ -61,10 +60,14 @@ app.put('/service/player', async (req, res, next) => {
   //console.log('service/player');
   //res.json({ express: "add player" })
 });
+
+
 app.delete('/service/player', (req, res) => {
   console.log('service/player');
   res.json({ express: "delete player" })
 });
+
+
 app.get('/service/profile', async (req, res) => {
   try {
     const playerProfile = await UserModel.findAll({ where: { email: 'david@testmail.com' } });
@@ -75,14 +78,26 @@ app.get('/service/profile', async (req, res) => {
   //console.log('service/profile');
   //res.json({ express: "player profile" })
 });
+
+
 app.post('/service/profile', (req, res) => {
   console.log('service/profile');
   res.json({ express: "player profile" })
 });
-app.post('/service/login', (req, res) => {
-  console.log('service/login');
-  res.json({ express: "login" })
+
+
+app.post('/service/login', async (req, res) => {
+  try {
+    const userEmail = req.body.email;
+    const userPassword = req.body.password;
+    const loginData = await UserModel.findAll({ where: { email: userEmail, password: userPassword} });
+    res.status(200).json({ loginData });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
 });
+
+
 //added to test and see client/server interaction:
 app.post('/service/news', (req, res) => {
   console.log(req.body.newstitle);

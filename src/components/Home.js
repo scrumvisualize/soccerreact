@@ -30,6 +30,7 @@ const Home = () => {
     setSearchResults(results);
   }, [searchTerm, playerList]);
 
+
   return (
     <div className="App">
       <div className="wrapper">

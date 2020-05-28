@@ -4,10 +4,9 @@ import axios from 'axios'
 
 
 const Register = () => {
-
+  
   const [picture, setPicture] = useState('');
   const [register, setRegister] = useState({ _id: '', photo: '', name: '', email: '', position: '', privilege: '', password: '' })
-
 
   const onChangePicture = e => {
     console.log('picture: ', picture);
@@ -31,14 +30,6 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    //  RegisterService.create(register)
-    //    .then(function (response) {
-    //    console.log(response)
-    //    })
-    //    .catch(function (error) {
-    //    console.log(error)
-    //    console.log("Check if server getting this log here..")
-    // }) 
     axios.put('http://localhost:8000/service/player', register)
       .then(function (response) {
         console.log(response)
@@ -61,7 +52,7 @@ const Register = () => {
                 <input id="profilePic" name="photo" type="file" onChange={onChangePicture} />
               </div>
               <div className="previewProfilePic" >
-                <img alt="" error={addDefaultSrc} name="previewImage" className="playerProfilePic_home_tile" src={picture}></img>
+                <img alt="" onError={addDefaultSrc} name="previewImage" className="playerProfilePic_home_tile" src={picture}></img>
               </div>
             </div>
             <div className="fillContentDiv formElement">

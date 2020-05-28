@@ -76,7 +76,7 @@ const Profile = () => {
                       <input id="profilePic" name="photo" type="file" onChange={onChangePicture} />
                     </div>
                     <div className="previewProfilePic" >
-                      <img alt="" error={addDefaultSrc} name="previewImage" className="playerProfilePic_home_tile" src={photo} onChange={e => handleChange(e, id)}></img>
+                      <img alt="" onError={addDefaultSrc} name="previewImage" className="playerProfilePic_home_tile" src={photo} onChange={e => handleChange(e, id)}></img>
                     </div>
                   </div>
                   <div className="fillContentDiv formElement">
