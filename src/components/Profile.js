@@ -3,6 +3,7 @@ import Axios from "axios";
 
 const Profile = () => {
 
+  const [email, setEmail] = useState('');
   const [picture, setPicture] = useState('');
   const [playerProfile, setPlayerProfile] = useState([]);
 

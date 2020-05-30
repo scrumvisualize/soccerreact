@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import Axios from "axios";
+import axios from "axios";
 
 const Login = () => {
 
@@ -14,19 +14,22 @@ const Login = () => {
     e.preventDefault()
     const fetchData = async () => {
       try {
-        const res = await Axios.post('http://localhost:8000/service/login', { email , password });
-        setLoginData(res.data.loginData); 
-          if (email === res.data.loginData[0].email && password === res.data.loginData[0].password) {
-            setError(false);
-            setHelperText('Login Successfully !');
-            localStorage.setItem('userPrivelege', res.data.loginData[0].privilege);
-            setValue(res.data.loginData[0].privilege);
-        } else {
-            setError(true);
-            setHelperText('Incorrect Email or Password..!')
-          }
+        const res = await axios.post('http://localhost:8000/service/login', { email, password });
+        //setLoginData(res.data.loginData); 
+        console.log("Front End success message:" + res.data.success);
+        if (res.data.success) {
+          setHelperText("Login successfully");
+          setValue(res.data.privilege);
+          localStorage.setItem('loginEmail', email);
+          setError(true);
+        }
+        else {
+          const failMessage = res.data.fail;
+          setHelperText(failMessage);
+        }
       } catch (e) {
-        console.log(e);
+        console.log(e.response.data);
+        setHelperText(e.response.data.fail);
       }
     }
     fetchData();
@@ -42,12 +45,12 @@ const Login = () => {
             </div>
             <div className="loginfillContentDiv formElement">
               <label>
-                <input  className="inputRequest formContentElement" type="text" placeholder="Email"  
-                onChange={(e)=>setEmail(e.target.value)}/>
+                <input className="inputRequest formContentElement" type="text" placeholder="Email"
+                  onChange={(e) => setEmail(e.target.value)} />
               </label>
               <label>
                 <input className="inputRequest formContentElement" type="password" placeholder="Password"
-                onChange={(e)=>setPassword(e.target.value)}/>
+                  onChange={(e) => setPassword(e.target.value)} />
               </label>
               <label>
                 <span className="loginValidationText">{helperText}</span>

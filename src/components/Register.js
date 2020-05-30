@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import RegisterService from '../services/RegisterService';
 import axios from 'axios'
 
 
@@ -7,6 +6,10 @@ const Register = () => {
   
   const [picture, setPicture] = useState('');
   const [register, setRegister] = useState({ _id: '', photo: '', name: '', email: '', position: '', privilege: '', password: '' })
+  const [isSent, setIsSent] = useState(false);
+
+  const thankYouMessage = <p>Thank you for your input!</p>
+  const form = <form>...</form>
 
   const onChangePicture = e => {
     console.log('picture: ', picture);
@@ -18,6 +21,7 @@ const Register = () => {
       return false;
     }
   };
+  
   // If no profile image is being uploaded, to avoid the broken display of image, display a default image.
   const addDefaultSrc = e => {
     e.target.src = '/images/default-icon.png';
@@ -33,7 +37,7 @@ const Register = () => {
     axios.put('http://localhost:8000/service/player', register)
       .then(function (response) {
         console.log(response)
-        setRegister('');
+        setIsSent(true);
       })
       .catch(function (error) {
         console.log(error)
@@ -89,6 +93,9 @@ const Register = () => {
       </div>
       <div className="soccerField_Register">
         <img src=""></img>
+        <span className="joinAboutus_data_1">
+                 {isSent ? thankYouMessage : form }
+        </span> 
       </div>
     </div>
   );

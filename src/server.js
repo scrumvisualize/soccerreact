@@ -37,6 +37,8 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// This get method is for displaying all registered players in Home screen.It should display all player registered as 
+// ADMIN or PLAYER privileges.
 
 app.get('/service/players', async (req, res) => {
   try {
@@ -48,7 +50,9 @@ app.get('/service/players', async (req, res) => {
 
 });
 
-// Modified the put method to check whether the insert of player is working:
+// This method is used to register a player via Register screen. Please look for Register.js
+// After registration the screen doesn't reset and need to display a Registration successfull message.
+
 app.put('/service/player', async (req, res, next) => {
   try {
     const addPlayer = await UserModel.create(req.body);
@@ -57,8 +61,6 @@ app.put('/service/player', async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
-  //console.log('service/player');
-  //res.json({ express: "add player" })
 });
 
 
@@ -67,16 +69,26 @@ app.delete('/service/player', (req, res) => {
   res.json({ express: "delete player" })
 });
 
+// Function to retrieve the login user's email from localStorage:
+function getlocalStorageValue(){
+  for (var i = 0; i < localStorage.length; i++) {
+    var key   = localStorage.key(i);
+    var value = localStorage.getItem(key);
+    return value;
+   }
+}
+
+// This get method is for displaying player data in the Profile screen, now it just displaying data based on hard coded email.
+// Need to display the login player data. Please refer axios call from Profile.js 
 
 app.get('/service/profile', async (req, res) => {
   try {
-    const playerProfile = await UserModel.findAll({ where: { email: 'david@testmail.com' } });
+    //const email = getlocalStorageValue();
+    const playerProfile = await UserModel.findAll({ where: { email: "dan@simple.com" } });
     res.status(200).json({ playerProfile });
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
-  //console.log('service/profile');
-  //res.json({ express: "player profile" })
 });
 
 
@@ -85,20 +97,29 @@ app.post('/service/profile', (req, res) => {
   res.json({ express: "player profile" })
 });
 
+// This post method is used to login a player via login screen.Now it will display a message if the login is successfull
+// Need to navigate from Login on successfull login.
 
 app.post('/service/login', async (req, res) => {
   try {
     const userEmail = req.body.email;
     const userPassword = req.body.password;
-    const loginData = await UserModel.findAll({ where: { email: userEmail, password: userPassword} });
-    res.status(200).json({ loginData });
+    const loginData = await UserModel.findAll({ where: { email: userEmail } });
+    const password = loginData[0].password;
+    const email = loginData[0].email;
+    if (password === userPassword && email === userEmail) {
+      const privilege = loginData[0].privilege;
+      res.status(200).json({ success: true, privilege, email });
+    } else {
+      res.status(403).json({ fail: "Login Failed !" });
+    }
   } catch (e) {
-    res.status(500).json({ message: e.message });
+    res.status(500).json({ fail: e.message });
   }
 });
 
 
-//added to test and see client/server interaction:
+//Added to test and see client/server interaction from Aboutus screen, ignore this at the moment.
 app.post('/service/news', (req, res) => {
   console.log(req.body.newstitle);
   res.json({ express: "news" })

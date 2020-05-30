@@ -57,3 +57,32 @@
     border-style: none ! important;
     border-radius: 5px ! important;
 }
+
+.box {
+  color: #fff;
+  padding: 1em;
+  text-align: center;
+  background-color: #efefef;
+}
+
+.tweets   { background-color: #A2DED0; }
+.replies  { background-color: #F4D03F; }
+.search   { background-color: #6C7A89; }
+.messages { background-color: #59ABE3; }
+
+/* Our Grid Code */
+.app-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 40vh;
+  margin: 20px;
+}
+
+/* try to resize the screen */
+@media screen and (max-width: 1024px) {
+  .app-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 10vh 10vh;
+  }
+}

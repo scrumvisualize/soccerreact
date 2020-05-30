@@ -61,6 +61,12 @@ const Aboutus = () => {
               </span>
               </span>  
             </div>
+            <div className='app-layout'>
+              <div className='box tweets'>1</div>
+              <div className='box replies'>2</div>
+              <div className='box search'>3</div>
+              <div className='box messages'>4</div>
+            </div>
             <div className="layout">
               <span className="col col-main">
                 <h3>Add news here ?</h3>
