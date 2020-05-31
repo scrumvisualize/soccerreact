@@ -43,7 +43,7 @@
     transition: .3s;
   }
  
-  .specialAboutus_data_1, .col-main h3, .joinAboutus_data_1 {
+  .specialAboutus_data_1, .col-main h3, .joinAboutus_data_1, .col-complementary h3 {
     width:100%;
     display: block;
     margin-left: 10px;

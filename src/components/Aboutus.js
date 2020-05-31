@@ -40,24 +40,26 @@ const Aboutus = () => {
             </div>   
             <div className="layout">
               <span className="col col-main">
-                <h3>What is so special about Us ?</h3>
-                <span className="specialAboutus_data_1">We are group of people who are aged 
-                between 20-60 love to play soccer everyday.We are group of people who are 
-                aged between 20-60 love to play soccer everyday.
-                We are group of people who are aged between 20-60 love to play soccer everyday.
-                We are group of people who are aged between 20-60 love to play soccer everyday.
-                We are group of people who are aged between 20-60 love to play soccer everyday.
-                We are group of people who are aged between 20-60 love to play soccer everyday.
-                We are group of people who are aged between 20-60 love to play soccer everyday.
+                <h3>What is going on?</h3>
+                <span className="specialAboutus_data_1">
+                  Hey guys! Here is an update on what is happening
+                  around here. We've just got a new player called
+                  Hannah! Also in bad news, our eldest member Phil has 
+                  just broken his leg. Because of the Covid-19 situations 
+                  we regret to inform you that this football season
+                  will not proceed until further notice.
+                  Phil would like you to know that he is on his way
+                  to recovery just like us! #StayCovidSafe!
                 </span>
               </span> 
               <span className="col col-complementary">
-              <h3>Are you keen to join us ? </h3>
+              <h3>Benefits of Joining Us </h3>
               <span className="joinAboutus_data_1">
-               Send your email to one of our admin person. Send your email to one of our admin person. Send your email to one of our admin person. 
-               Send your email to one of our admin person. Send your email to one of our admin person. Send your email to one of our admin person. 
-               Send your email to one of our admin person. Send your email to one of our admin person. Send your email to one of our admin person. 
-               Send your email to one of our admin person. Send your email to one of our admin person. 
+               The benefits of joining us are the various
+               family events and socializing that you can enjoy.
+               If you are a member you don't have to pay for one 
+               whole month! In addition to that you will get a woolworths 
+               $250 dollar gift card! Join now to be a member!
               </span>
               </span>  
             </div>

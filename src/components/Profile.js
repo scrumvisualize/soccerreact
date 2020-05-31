@@ -69,7 +69,7 @@ const Profile = () => {
         <div className="register_player_Twocolumn_layout_two">
           <form onSubmit={handleSubmit} className="myForm">
             {
-              playerProfile.map(({ id, photo, name, email, position, privilege, password }) => (
+              playerProfile.map(({ id, photo, name, email, phonenumber, position, privilege, password }) => (
                 <div key={id}>
                   <div className="formInstructionsDiv formElement">
                     <h2 className="formTitle">Profile</h2>
@@ -86,6 +86,9 @@ const Profile = () => {
                     </label>
                     <label>
                       <input className="inputRequest formContentElement" name="email" type="text" value={email} onChange={e => handleChange(e, id)}/>
+                    </label>
+                    <label>
+                      <input className="inputRequest formContentElement" name="phonenumber" type="text" value={phonenumber} onChange={e => handleChange(e, id)}/>
                     </label>
                     <label>
                       <input className="inputRequest formContentElement" name="position" type="text" value={position} onChange={e => handleChange(e, id)}/>

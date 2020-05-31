@@ -5,7 +5,7 @@ import axios from 'axios'
 const Register = () => {
   
   const [picture, setPicture] = useState('');
-  const [register, setRegister] = useState({ _id: '', photo: '', name: '', email: '', position: '', privilege: '', password: '' })
+  const [register, setRegister] = useState({ _id: '', photo: '', name: '', email: '', phonenumber:'', position: '', privilege: '', password: '' })
   const [isSent, setIsSent] = useState(false);
 
   const thankYouMessage = <p>Thank you for your input!</p>
@@ -70,6 +70,9 @@ const Register = () => {
                 <input className="inputRequest formContentElement" name="email" type="text" placeholder="Email" onChange={onChange} />
               </label>
               <label>
+                <input className="inputRequest formContentElement" name="phonenumber" type="text" placeholder="Mobile" onChange={onChange} />
+              </label>
+              <label>
                 <input className="inputRequest formContentElement" name="position" type="text" placeholder="Position" onChange={onChange} />
               </label>
               <label>
@@ -82,7 +85,7 @@ const Register = () => {
                 </div>
               </label>
               <label>
-                <input className="inputRequest formContentElement" name="password" type="password" placeholder="Create Password" onChange={onChange} />
+                <input className="inputRequest formContentElement" name="password" type="password" placeholder="Password" onChange={onChange} />
               </label>
             </div>
             <div className="submitButtonDiv formElement">

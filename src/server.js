@@ -42,7 +42,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/service/players', async (req, res) => {
   try {
-    const players = await UserModel.findAll({ where: { privilege: 'PLAYER' } });
+    const players = await UserModel.findAll({ 
+      where: {
+        privilege: ['ADMIN', 'PLAYER']
+      }
+    });
     res.status(200).json({ players });
   } catch (e) {
     res.status(500).json({ message: e.message });
@@ -84,7 +88,7 @@ function getlocalStorageValue(){
 app.get('/service/profile', async (req, res) => {
   try {
     //const email = getlocalStorageValue();
-    const playerProfile = await UserModel.findAll({ where: { email: "dan@simple.com" } });
+    const playerProfile = await UserModel.findAll({ where: { email: "ron@cool.com" } });
     res.status(200).json({ playerProfile });
   } catch (e) {
     res.status(500).json({ message: e.message });

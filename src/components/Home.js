@@ -3,6 +3,8 @@ import Axios from "axios";
 
 
 const Home = () => {
+
+  const [phoneTooltip, setPhoneTooltip] = useState({show: false, position: "absolute"});
   const [playerList, setPlayerList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -22,6 +24,7 @@ const Home = () => {
     }
     fetchData();
   }, []);
+
   useEffect(() => {
     const results = playerList.filter(player =>
       player.name.toLowerCase().includes(searchTerm) || player.name.toUpperCase().includes(searchTerm) || player.position.toLowerCase().includes(searchTerm)
@@ -30,6 +33,15 @@ const Home = () => {
     setSearchResults(results);
   }, [searchTerm, playerList]);
 
+  const displayPhoneToolTip = e => {
+    e.preventDefault();
+    if (!phoneTooltip.show) {
+      setPhoneTooltip(prev => ({ ...prev, show: true })); // show tooltip
+      setTimeout(() => {
+        setPhoneTooltip(prev => ({ ...prev, show: false })); // remove/hide tooltip
+      }, 3000);
+    }
+  };
 
   return (
     <div className="App">
@@ -49,7 +61,7 @@ const Home = () => {
         <div className="playerList_home_page">
           <div className="grid-container">
             {
-              searchResults.map(({ id, image, position, name }) => (
+              searchResults.map(({ id, image, position, phonenumber, name }) => (
                 <div key={id} className="grid-item">
                   <div>
                     <img alt="" className="playerProfilePic_home_tile" key={image} src={image}></img>
@@ -60,12 +72,17 @@ const Home = () => {
                       <span className="playerPosition_home_tile" key={position}>{position}</span>
                     </span>
                   </div>
+                  <span className="phoneNumber_home">
+                    <img src="/images/phone.png"  alt={"phoneTooltip.show"} key={id} name="phoneNumberhomeicon" onClick={displayPhoneToolTip}/>
+                  </span>
+                  {phoneTooltip.show && (
+                    <div className="tooltip_PhoneNumber_home" key={phonenumber}>{phonenumber}</div>
+                    )}
                 </div>
               ))
             }
           </div>
         </div>
-
       </div>
     </div>
   );
