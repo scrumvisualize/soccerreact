@@ -59,7 +59,7 @@ const Aboutus = () => {
                family events and socializing that you can enjoy.
                If you are a member you don't have to pay for one 
                whole month! In addition to that you will get a woolworths 
-               $250 dollar gift card! Join now to be a member!
+               $5 dollar gift card! Join now to be a member!
               </span>
               </span>  
             </div>

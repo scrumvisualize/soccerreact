@@ -4,7 +4,7 @@ import Axios from "axios";
 
 const Home = () => {
 
-  const [phoneTooltip, setPhoneTooltip] = useState({show: false, position: "absolute"});
+  const [phoneTooltip, setPhoneTooltip] = useState({ show: false, position: "absolute" });
   const [playerList, setPlayerList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -12,6 +12,7 @@ const Home = () => {
   const handleChange = event => {
     setSearchTerm(event.target.value);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,6 +26,7 @@ const Home = () => {
     fetchData();
   }, []);
 
+
   useEffect(() => {
     const results = playerList.filter(player =>
       player.name.toLowerCase().includes(searchTerm) || player.name.toUpperCase().includes(searchTerm) || player.position.toLowerCase().includes(searchTerm)
@@ -32,15 +34,14 @@ const Home = () => {
     );
     setSearchResults(results);
   }, [searchTerm, playerList]);
+  
 
-  const displayPhoneToolTip = e => {
+  const displayPhoneToolTip = (userId) => e => {
     e.preventDefault();
-    if (!phoneTooltip.show) {
-      setPhoneTooltip(prev => ({ ...prev, show: true })); // show tooltip
-      setTimeout(() => {
-        setPhoneTooltip(prev => ({ ...prev, show: false })); // remove/hide tooltip
-      }, 3000);
-    }
+    setPhoneTooltip(userId); // show tooltip
+    setTimeout(() => {
+      setPhoneTooltip(false); // remove/hide tooltip
+    }, 3000);
   };
 
   return (
@@ -73,11 +74,11 @@ const Home = () => {
                     </span>
                   </div>
                   <span className="phoneNumber_home">
-                    <img src="/images/phone.png"  alt={"phoneTooltip.show"} key={id} name="phoneNumberhomeicon" onClick={displayPhoneToolTip}/>
+                    <img src="/images/phone.png" alt={"phoneTooltip.show"} key={id} name="phoneNumberhomeicon" onClick={displayPhoneToolTip(id)} />
                   </span>
-                  {phoneTooltip.show && (
+                  {phoneTooltip === id && (
                     <div className="tooltip_PhoneNumber_home" key={phonenumber}>{phonenumber}</div>
-                    )}
+                  )}
                 </div>
               ))
             }
