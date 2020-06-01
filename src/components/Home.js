@@ -29,19 +29,19 @@ const Home = () => {
 
   useEffect(() => {
     const results = playerList.filter(player =>
-      player.name.toLowerCase().includes(searchTerm) || player.name.toUpperCase().includes(searchTerm) || player.position.toLowerCase().includes(searchTerm)
-      || player.position.toUpperCase().includes(searchTerm)
+    player.name.toLowerCase().includes(searchTerm) || player.name.toUpperCase().includes(searchTerm) || player.position.toLowerCase().includes(searchTerm)
+    || player.position.toUpperCase().includes(searchTerm)
     );
     setSearchResults(results);
   }, [searchTerm, playerList]);
-  
+
 
   const displayPhoneToolTip = (userId) => e => {
     e.preventDefault();
     setPhoneTooltip(userId); // show tooltip
     setTimeout(() => {
-      setPhoneTooltip(false); // remove/hide tooltip
-    }, 3000);
+    setPhoneTooltip(false); // remove/hide tooltip
+    }, 4000);
   };
 
   return (
