@@ -167,14 +167,39 @@
   width: 30px;
 }
 .tooltip_PhoneNumber_home{
-  background-color: #f8e76e;
+  position: absolute;
+  background-color: rgba(248, 231, 110);
   color: #1a1818;
   width:100px;
   height:25px;
   border-radius: 5px;
-  z-index:40;
-  position: relative;
-  margin:0 auto;
+  z-index: 1;
   margin-bottom: 2px;
-  margin-left: 20px;
+  margin-top: -50px;
+  margin-left: 320px;
+  -webkit-transition: opacity 75ms linear;
+    -moz-transition: opacity 75ms linear;
+    -ms-transition: opacity 75ms linear;
+    transition: opacity 75ms linear;
+}
+
+@media only screen and (max-width: 500px) { 
+
+  .tooltip_PhoneNumber_home{
+    position: absolute;
+    background-color: rgba(248, 231, 110);
+    color: #1a1818;
+    width:100px;
+    height:25px;
+    border-radius: 5px;
+    z-index: 1;
+    margin-bottom: 2px;
+    margin-top: -5px;
+    margin-left: 8px;
+    -webkit-transition: opacity 75ms linear;
+      -moz-transition: opacity 75ms linear;
+      -ms-transition: opacity 75ms linear;
+      transition: opacity 75ms linear;
+  }
+  
 }

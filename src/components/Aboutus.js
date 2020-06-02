@@ -42,24 +42,40 @@ const Aboutus = () => {
               <span className="col col-main">
                 <h3>What is going on?</h3>
                 <span className="specialAboutus_data_1">
-                  Hey guys! Here is an update on what is happening
-                  around here. We've just got a new player called
-                  Hannah! Also in bad news, our eldest member Phil has 
-                  just broken his leg. Because of the Covid-19 situations 
-                  we regret to inform you that this football season
-                  will not proceed until further notice.
-                  Phil would like you to know that he is on his way
-                  to recovery just like us! #StayCovidSafe!
+                  Hey guys! If you read this blog, you
+                  will know that there is a football event 
+                  (see below for more information)
+                  coming up in three months time!
+                  We are all very excited to see what 
+                  skills you have got! Dan is excited 
+                  show you some futsal techniques too!
+                   Unfortunately,this event can be cancelled 
+                  so we need you to stay calm and hope that 
+                  the next event will not go wrong.
+                  #StayCovidSafe,
+                  The Team
                 </span>
               </span> 
               <span className="col col-complementary">
-              <h3>Benefits of Joining Us </h3>
+              <h3>Things you need to know: </h3>
               <span className="joinAboutus_data_1">
-               The benefits of joining us are the various
-               family events and socializing that you can enjoy.
-               If you are a member you don't have to pay for one 
-               whole month! In addition to that you will get a woolworths 
-               $5 dollar gift card! Join now to be a member!
+               Later in the year, there is a football event that 
+               anyone is welcome to come to. To find more 
+               information on this please contact 
+               mysoccerlife@ball.com.kick
+               This event will be on the 7th of november,
+               once the restrictions ease. We are alerting
+              you now this event may/can be cancelled,
+               so if that does happen we can be prepared.
+               Please be aware that if you do not check the 
+               app, you will not know our desicions.
+               #StayCovidSafe,
+               The Team.
+
+
+                
+               
+               
               </span>
               </span>  
             </div>
