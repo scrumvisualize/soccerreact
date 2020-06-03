@@ -203,3 +203,26 @@
   }
   
 }
+
+.deletePlayerButton{
+  position: absolute;
+  width: 18px;
+  height:18px;
+  margin-left: 230px;
+  margin-top: 123px;
+}
+.deletePlayerimg{
+  width: 18px;
+  height:18px;
+}
+@media only screen and (max-width: 500px) { 
+
+  .deletePlayerButton{
+    position: absolute;
+    width: 15px;
+    height:15px;
+    margin-left: 35px;
+    margin-top: 125px;
+  }
+  
+}

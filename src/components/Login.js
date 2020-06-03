@@ -20,6 +20,7 @@ const Login = () => {
         if (res.data.success) {
           setHelperText("Login successfully");
           setValue(res.data.privilege);
+          localStorage.setItem('Privilege', res.data.privilege);
           localStorage.setItem('loginEmail', email);
           setError(true);
         }

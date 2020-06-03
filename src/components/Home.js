@@ -8,6 +8,8 @@ const Home = () => {
   const [playerList, setPlayerList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [deleteIcon, setDeleteIcon] =useState({ show: false});
+  
 
   const handleChange = event => {
     setSearchTerm(event.target.value);
@@ -19,6 +21,9 @@ const Home = () => {
         const res = await Axios.get('http://localhost:8000/service/players');
         setPlayerList(res.data.players);
         setSearchResults(res.data.players);
+        const privilege = localStorage.getItem('Privilege');
+        console.log("What is getting in Front End:"+privilege);
+        showDeleteIcon(privilege);
       } catch (e) {
         console.log(e);
       }
@@ -44,6 +49,18 @@ const Home = () => {
     }, 4000);
   };
 
+  const showDeleteIcon = (privilege) =>{
+    if(privilege === "ADMIN"){
+      setDeleteIcon({show:true})
+    }else{
+      setDeleteIcon({show:false})
+    }
+  }
+  const deletePlayer = (id ) => e => {
+    alert("Your delete message !")
+  }
+
+ 
   return (
     <div className="App">
       <div className="wrapper">
@@ -58,12 +75,18 @@ const Home = () => {
             </div>
           </label>
         </div>
-        {!searchResults.length && (<div> <p className="noSearchData"> No results available..! </p> </div>)}
+        {!searchResults.length && (<div> <p className="noSearchData"> Did not match any results! </p> </div>)}
         <div className="playerList_home_page">
           <div className="grid-container">
             {
               searchResults.map(({ id, image, position, phonenumber, name }) => (
                 <div key={id} className="grid-item">
+                  {
+                    deleteIcon.show &&(
+                      <span className="deletePlayerButton" onClick={deletePlayer(id)}>
+                        <img className="deletePlayerimg"src="/images/delete.png"></img>
+                      </span>
+                    )}
                   <div>
                     <img alt="" className="playerProfilePic_home_tile" key={image} src={image}></img>
                   </div>
