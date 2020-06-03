@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import AlertDialog from "../modal/Dialog";
 import Axios from "axios";
 
 
@@ -9,6 +10,8 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [deleteIcon, setDeleteIcon] =useState({ show: false});
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [playerId, setPlayerId] = useState("");
   
 
   const handleChange = event => {
@@ -56,8 +59,9 @@ const Home = () => {
       setDeleteIcon({show:false})
     }
   }
-  const deletePlayer = (id ) => e => {
-    alert("Your delete message !")
+  const deletePlayer = (id) => e => {
+    setPlayerId(id);
+    setDeleteDialog(true);
   }
 
  
@@ -108,6 +112,11 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <AlertDialog
+        open={deleteDialog}
+        onClose={() => setDeleteDialog(false)}
+        playerId={playerId}
+      />
     </div>
   );
 }
