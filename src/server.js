@@ -37,7 +37,7 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// This get method is for displaying all registered players in Home screen.It should display all player registered as 
+// This get method is for displaying all players in Home screen.It should display all player registered as 
 // ADMIN or PLAYER privileges.
 
 app.get('/service/players', async (req, res) => {
@@ -67,11 +67,22 @@ app.put('/service/player', async (req, res, next) => {
   }
 });
 
+// This method is used to delete a player from Home screen by a player with ADMIN privilege:
+// On click on Delete icon, a confirmation messge will be displayed and further on press on Yes will delete the player.
 
-app.delete('/service/player', (req, res) => {
-  console.log('service/player');
-  res.json({ express: "delete player" })
+app.delete('/service/player', async (req, res) => {
+  try {
+    const userId = req.body.id;
+    console.log("Req"+userId);
+    const deletePlayer = await UserModel.destroy({
+      where:{ id : userId }
+    })
+    res.status(200).json({ deletePlayer });
+    } catch (e) {
+    res.status(500).json({ fail: e.message });
+   }
 });
+
 
 // Function to retrieve the login user's email from localStorage:
 function getlocalStorageValue(){
@@ -88,7 +99,7 @@ function getlocalStorageValue(){
 app.get('/service/profile', async (req, res) => {
   try {
     //const email = getlocalStorageValue();
-    const playerProfile = await UserModel.findAll({ where: { email: "ron@cool.com" } });
+    const playerProfile = await UserModel.findAll({ where: { email: "adam@test.com" } });
     res.status(200).json({ playerProfile });
   } catch (e) {
     res.status(500).json({ message: e.message });

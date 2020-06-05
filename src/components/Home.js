@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef,useEffect, useState } from "react";
 import AlertDialog from "../modal/Dialog";
 import Axios from "axios";
 
@@ -9,24 +9,34 @@ const Home = () => {
   const [playerList, setPlayerList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [deleteIcon, setDeleteIcon] =useState({ show: false});
+  const [deleteIcon, setDeleteIcon] = useState({ show: false });
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [playerId, setPlayerId] = useState("");
-  
+  const isMounted = useRef(false);
+
 
   const handleChange = event => {
     setSearchTerm(event.target.value);
   };
 
+  
+useEffect(() => {
+  isMounted.current = true;
+  return () => isMounted.current = false;
+}, []);
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await Axios.get('http://localhost:8000/service/players');
+        if (isMounted.current) {
         setPlayerList(res.data.players);
         setSearchResults(res.data.players);
         const privilege = localStorage.getItem('Privilege');
-        console.log("What is getting in Front End:"+privilege);
+        console.log("What is getting in Front End:" + privilege);
         showDeleteIcon(privilege);
+        }
       } catch (e) {
         console.log(e);
       }
@@ -37,8 +47,8 @@ const Home = () => {
 
   useEffect(() => {
     const results = playerList.filter(player =>
-    player.name.toLowerCase().includes(searchTerm) || player.name.toUpperCase().includes(searchTerm) || player.position.toLowerCase().includes(searchTerm)
-    || player.position.toUpperCase().includes(searchTerm)
+      player.name.toLowerCase().includes(searchTerm) || player.name.toUpperCase().includes(searchTerm) || player.position.toLowerCase().includes(searchTerm)
+      || player.position.toUpperCase().includes(searchTerm)
     );
     setSearchResults(results);
   }, [searchTerm, playerList]);
@@ -48,15 +58,15 @@ const Home = () => {
     e.preventDefault();
     setPhoneTooltip(userId); // show tooltip
     setTimeout(() => {
-    setPhoneTooltip(false); // remove/hide tooltip
+      setPhoneTooltip(false); // remove/hide tooltip
     }, 4000);
   };
 
-  const showDeleteIcon = (privilege) =>{
-    if(privilege === "ADMIN"){
-      setDeleteIcon({show:true})
-    }else{
-      setDeleteIcon({show:false})
+  const showDeleteIcon = (privilege) => {
+    if (privilege === "ADMIN") {
+      setDeleteIcon({ show: true })
+    } else {
+      setDeleteIcon({ show: false })
     }
   }
   const deletePlayer = (id) => e => {
@@ -64,7 +74,25 @@ const Home = () => {
     setDeleteDialog(true);
   }
 
- 
+  const onDelete = id => () => {
+    try {
+      Axios.delete('http://localhost:8000/service/player', {
+      headers: {
+	    'Content-Type': 'application/json'
+        },
+      data: {
+        'id' : id
+      }
+    });
+      setDeleteDialog(false);
+      const restOfPlayerResults = searchResults.filter((result) => result.id !== id)
+      setSearchResults(restOfPlayerResults);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+
   return (
     <div className="App">
       <div className="wrapper">
@@ -86,9 +114,9 @@ const Home = () => {
               searchResults.map(({ id, image, position, phonenumber, name }) => (
                 <div key={id} className="grid-item">
                   {
-                    deleteIcon.show &&(
+                    deleteIcon.show && (
                       <span className="deletePlayerButton" onClick={deletePlayer(id)}>
-                        <img className="deletePlayerimg"src="/images/delete.png"></img>
+                        <img className="deletePlayerimg" src="/images/delete.png"></img>
                       </span>
                     )}
                   <div>
@@ -112,11 +140,12 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <AlertDialog
+        <AlertDialog
+        onDelete={onDelete}
         open={deleteDialog}
         onClose={() => setDeleteDialog(false)}
         playerId={playerId}
-      />
+        />
     </div>
   );
 }
