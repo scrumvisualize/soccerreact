@@ -57,13 +57,13 @@
   .formElement{
   /*   border:solid black; */
   /*   flex-basis:100%; */
-    width:90%;
+    width:100%;
   }
   
   
   
   .formInstructionsDiv{
-    width:90%;
+    width:100%;
     padding:15px 0;
     background-color:#f8e76e;
     border-radius:5px;
@@ -127,7 +127,7 @@
   
   
   .submitButton{
-    width:40%;
+    width:100%;
     height:100%;
     background-color: #0099cc;
     border-style:none;
