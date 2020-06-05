@@ -1,4 +1,4 @@
-import React, { useRef,useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import AlertDialog from "../modal/Dialog";
 import Axios from "axios";
 
@@ -19,11 +19,11 @@ const Home = () => {
     setSearchTerm(event.target.value);
   };
 
-  
-useEffect(() => {
-  isMounted.current = true;
-  return () => isMounted.current = false;
-}, []);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => isMounted.current = false;
+  }, []);
 
 
   useEffect(() => {
@@ -31,11 +31,11 @@ useEffect(() => {
       try {
         const res = await Axios.get('http://localhost:8000/service/players');
         if (isMounted.current) {
-        setPlayerList(res.data.players);
-        setSearchResults(res.data.players);
-        const privilege = localStorage.getItem('Privilege');
-        console.log("What is getting in Front End:" + privilege);
-        showDeleteIcon(privilege);
+          setPlayerList(res.data.players);
+          setSearchResults(res.data.players);
+          const privilege = localStorage.getItem('Privilege');
+          console.log("What is getting in Front End:" + privilege);
+          showDeleteIcon(privilege);
         }
       } catch (e) {
         console.log(e);
@@ -77,13 +77,13 @@ useEffect(() => {
   const onDelete = id => () => {
     try {
       Axios.delete('http://localhost:8000/service/player', {
-      headers: {
-	    'Content-Type': 'application/json'
+        headers: {
+          'Content-Type': 'application/json'
         },
-      data: {
-        'id' : id
-      }
-    });
+        data: {
+          'id': id
+        }
+      });
       setDeleteDialog(false);
       const restOfPlayerResults = searchResults.filter((result) => result.id !== id)
       setSearchResults(restOfPlayerResults);
@@ -140,12 +140,12 @@ useEffect(() => {
           </div>
         </div>
       </div>
-        <AlertDialog
+      <AlertDialog
         onDelete={onDelete}
         open={deleteDialog}
         onClose={() => setDeleteDialog(false)}
         playerId={playerId}
-        />
+      />
     </div>
   );
 }

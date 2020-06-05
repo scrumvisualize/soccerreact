@@ -7,12 +7,16 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <BrowserRouter>
-    <React.StrictMode>
       <App />
-    </React.StrictMode>
   </BrowserRouter>,
   document.getElementById('root')
 );
+//To remove the below warning findDOMNode is deprecated..., just removed <React.StrictMode>
+//Warning: findDOMNode is deprecated in StrictMode. findDOMNode was passed an instance of Transition which is inside StrictMode.
+
+//<React.StrictMode>
+//<App />
+//</React.StrictMode>
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
