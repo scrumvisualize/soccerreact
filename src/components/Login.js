@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
 
@@ -9,6 +10,7 @@ const Login = () => {
   const [helperText, setHelperText] = useState('');
   const [value, setValue] = React.useState('');
   const [error, setError] = useState(false);
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -22,7 +24,8 @@ const Login = () => {
           setValue(res.data.privilege);
           localStorage.setItem('Privilege', res.data.privilege);
           localStorage.setItem('loginEmail', email);
-          setError(true);
+          history.push('/')
+          window.location.reload(true)
         }
         else {
           const failMessage = res.data.fail;
@@ -35,6 +38,10 @@ const Login = () => {
     }
     fetchData();
   };
+
+  function gotoRegister() {
+    history.push('/register')
+  }
 
   return (
     <div className="login_wrapper">
@@ -59,6 +66,9 @@ const Login = () => {
             </div>
             <div className="loginsubmitButtonDiv formElement">
               <button type="submit" className="submitButton">Login</button>
+            </div>
+            <div className="loginsubmitButtonDiv formElement">
+              <button className="submitButton" onClick={gotoRegister}>Signup</button>
             </div>
           </form>
         </div>

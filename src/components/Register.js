@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios'
+import { useHistory } from "react-router-dom";
 
 
 const Register = () => {
@@ -10,6 +11,7 @@ const Register = () => {
 
   const thankYouMessage = <p>Thank you for your input!</p>
   const form = <form>...</form>
+  const history = useHistory();
 
   const onChangePicture = e => {
     console.log('picture: ', picture);
@@ -38,6 +40,7 @@ const Register = () => {
       .then(function (response) {
         console.log(response)
         setIsSent(true);
+        history.push('/login')
       })
       .catch(function (error) {
         console.log(error)
