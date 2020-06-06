@@ -8,8 +8,8 @@ const cors = require("cors");
 const port = 8000;
 const DB_NAME = 'soccerreact';
 const DB_PORT = 3306;
-const DB_USERNAME = 'root';
-const DB_PASSWORD = '';
+const DB_USERNAME = 'admin';
+const DB_PASSWORD = 'C@rnagieMe11on';
 const DB_HOST = 'localhost';
 const DB_DIALECT = 'mysql';
 const DB_POOL = {
@@ -98,8 +98,8 @@ function getlocalStorageValue(){
 
 app.get('/service/profile', async (req, res) => {
   try {
-    //const email = getlocalStorageValue();
-    const playerProfile = await UserModel.findAll({ where: { email: "adam@test.com" } });
+    const userEmail = req.query.email;
+    const playerProfile = await UserModel.findAll({ where: { email: userEmail } });
     res.status(200).json({ playerProfile });
   } catch (e) {
     res.status(500).json({ message: e.message });

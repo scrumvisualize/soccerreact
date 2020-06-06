@@ -19,7 +19,7 @@
   /* etc */
   
   .col {
-    width:100%;
+    width:95%;
     padding: 1em;
     margin: 0 50px 50px 0;
     margin-left: 10px;
@@ -44,7 +44,7 @@
   }
  
   .specialAboutus_data_1, .col-main h3, .joinAboutus_data_1, .col-complementary h3 {
-    width:100%;
+    width:95%;
     display: block;
     margin-left: 10px;
     margin-right: 10px;
@@ -75,7 +75,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 40vh;
-  margin: 20px;
+  margin: 10px;
 }
 
 /* try to resize the screen */

@@ -18,9 +18,7 @@ var ReactDOM = require("react-dom");
 const App = () => (
   <BrowserRouter>
     <>
-    
       <Navigation />
-      
       <Switch>
         <ProtectedRoute exact path="/" component={Home} />
         <ProtectedRoute path="/profile" component={Profile} />

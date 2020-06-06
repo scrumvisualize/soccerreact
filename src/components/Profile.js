@@ -6,6 +6,7 @@ const Profile = () => {
   const [email, setEmail] = useState('');
   const [picture, setPicture] = useState('');
   const [playerProfile, setPlayerProfile] = useState([]);
+  const loginUserEmail = localStorage.getItem('loginEmail');
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -54,7 +55,10 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await Axios.get('http://localhost:8000/service/profile');
+        const params = {
+          email: loginUserEmail,
+        };
+      const res = await Axios.get('http://localhost:8000/service/profile', {params});
         setPlayerProfile(res.data.playerProfile);
       } catch (e) {
         console.log(e);

@@ -71,11 +71,6 @@ const Aboutus = () => {
                app, you will not know our desicions.
                #StayCovidSafe,
                The Team.
-
-
-                
-               
-               
               </span>
               </span>  
             </div>
