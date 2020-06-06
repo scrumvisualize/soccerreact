@@ -152,3 +152,9 @@
   .loginValidationText{
     background-color:#74c9eb;
   }
+  .loginErrorTextFormat{
+    color: #eb2942;
+    background-color: #ffffff;
+    font-size: x-small;
+    height:2px;
+  }
