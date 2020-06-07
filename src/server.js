@@ -37,12 +37,12 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// This get method is for displaying all players in Home screen.It should display all player registered as 
-// ADMIN or PLAYER privileges.
+// This get method is for displaying all players in Home screen. It should display all registered players,
+// irrespective of privileges.
 
 app.get('/service/players', async (req, res) => {
   try {
-    const players = await UserModel.findAll({ 
+    const players = await UserModel.findAll({
       where: {
         privilege: ['ADMIN', 'PLAYER']
       }
@@ -55,13 +55,20 @@ app.get('/service/players', async (req, res) => {
 });
 
 // This method is used to register a player via Register screen. Please look for Register.js
-// After registration the screen doesn't reset and need to display a Registration successfull message.
+// After successfull registration, system will navigate to Login screen.
 
 app.put('/service/player', async (req, res, next) => {
   try {
-    const addPlayer = await UserModel.create(req.body);
-    console.log("Server side log Put working:" + addPlayer);
-    return res.json({ addPlayer });
+    const userEmail = req.body.email;
+    const playerEmail = await UserModel.count({ where: { email: userEmail } });
+    if (playerEmail == 0) {
+      //If there is no email found, procced with normal registration here...
+      const addPlayer = await UserModel.create(req.body);
+      console.log("Server side PUT method log:" + addPlayer);
+      res.status(200).json({ success: true });
+    } else {
+      return res.status(409).json({ message: "Email address already exists !" });
+    }
   } catch (err) {
     return next(err);
   }
@@ -73,28 +80,28 @@ app.put('/service/player', async (req, res, next) => {
 app.delete('/service/player', async (req, res) => {
   try {
     const userId = req.body.id;
-    console.log("Req"+userId);
+    console.log("Req" + userId);
     const deletePlayer = await UserModel.destroy({
-      where:{ id : userId }
+      where: { id: userId }
     })
     res.status(200).json({ deletePlayer });
-    } catch (e) {
+  } catch (e) {
     res.status(500).json({ fail: e.message });
-   }
+  }
 });
 
 
 // Function to retrieve the login user's email from localStorage:
-function getlocalStorageValue(){
+function getlocalStorageValue() {
   for (var i = 0; i < localStorage.length; i++) {
-    var key   = localStorage.key(i);
+    var key = localStorage.key(i);
     var value = localStorage.getItem(key);
     return value;
-   }
+  }
 }
 
-// This get method is for displaying player data in the Profile screen, now it just displaying data based on hard coded email.
-// Need to display the login player data. Please refer axios call from Profile.js 
+// This get method is for displaying player data in the Profile screen.
+// Profile should display the login player data. Please refer axios call from Profile.js 
 
 app.get('/service/profile', async (req, res) => {
   try {
@@ -112,21 +119,26 @@ app.post('/service/profile', (req, res) => {
   res.json({ express: "player profile" })
 });
 
-// This post method is used to login a player via login screen.Now it will display a message if the login is successfull
-// Need to navigate from Login on successfull login.
+// This post method is used to login a player via login screen.
+// After successfull login it will display Home screen with Players.
 
 app.post('/service/login', async (req, res) => {
   try {
+
     const userEmail = req.body.email;
     const userPassword = req.body.password;
     const loginData = await UserModel.findAll({ where: { email: userEmail } });
+    if (loginData == null || loginData == '') {
+      console.log("NULL null:" + loginData);
+      res.status(403).json({ fail: "Email id doesn't exist !" });
+    }
     const password = loginData[0].password;
     const email = loginData[0].email;
     if (password === userPassword && email === userEmail) {
       const privilege = loginData[0].privilege;
       res.status(200).json({ success: true, privilege, email });
     } else {
-      res.status(403).json({ fail: "Login Failed !" });
+      res.status(403).json({ fail: "Incorrect password entered !" });
     }
   } catch (e) {
     res.status(500).json({ fail: e.message });

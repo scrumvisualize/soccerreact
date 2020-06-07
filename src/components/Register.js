@@ -5,16 +5,18 @@ import { useHistory } from "react-router-dom";
 
 
 const Register = () => {
-  
+
   const [picture, setPicture] = useState('');
-  const [formRegister, setRegister] = useState({ _id: '', photo: '', name: '', email: '', phonenumber:'', position: '', privilege: '', password: '' })
+  const [formRegister, setRegister] = useState({ _id: '', photo: '', name: '', email: '', phonenumber: '', position: '', privilege: '', password: '' })
   const [isSent, setIsSent] = useState(false);
+  const [helperText, setHelperText] = useState('');
   const { handleSubmit, register, errors } = useForm();
+  const [isError, setIsError] = useState(false);
 
   const thankYouMessage = <p>Thank you for your input!</p>
   const form = <form>...</form>
   const history = useHistory();
-  
+
 
   const onChangePicture = e => {
     console.log('picture: ', picture);
@@ -26,7 +28,7 @@ const Register = () => {
       return false;
     }
   };
-  
+
   // If no profile image is being uploaded, to avoid the broken display of image, display a default image.
   const addDefaultSrc = e => {
     e.target.src = '/images/default-icon.png';
@@ -37,17 +39,24 @@ const Register = () => {
     setRegister({ ...formRegister, [e.target.name]: e.target.value });
   }
 
-  const onSubmit  = () => {
-    //e.preventDefault()
-    axios.put('http://localhost:8000/service/player', formRegister)
-      .then(function (response) {
-        console.log(response)
-        setIsSent(true);
-        history.push('/login')
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+  const onSubmit = () => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.put('http://localhost:8000/service/player', formRegister);
+        console.log("Front End success message:" + res.data.success);
+        if (res.data.success) {
+          setIsSent(true);
+          history.push('/login')
+        }
+        else {
+          console.log(res.data.message);
+          setHelperText(res.data.message);
+        }
+      } catch (e) {
+        setHelperText(e.response.data.message);
+      }
+    }
+    fetchData();
   }
 
   return (
@@ -68,42 +77,42 @@ const Register = () => {
             <div className="fillContentDiv formElement">
               <label>
                 <input className="inputRequest formContentElement" name="name" type="text" placeholder="Full Name"
-                onChange={onChange}      
-                maxLength={30}
-                ref={register({
-                  required: "Full name is required", 
-                  pattern: {
-                    value: /^[a-zA-Z\s]{3,30}$/,
-                    message: "Full name should have minimum of 3 letters"
-                  }
-                })}
+                  onChange={onChange}
+                  maxLength={30}
+                  ref={register({
+                    required: "Full name is required",
+                    pattern: {
+                      value: /^[a-zA-Z\s]{3,30}$/,
+                      message: "Full name should have minimum of 3 letters"
+                    }
+                  })}
                 />
                 <span className="registerErrorTextFormat">{errors.name && errors.name.message}</span>
               </label>
               <label>
-                <input className="inputRequest formContentElement" name="email" type="text" placeholder="Email" 
-                onChange={onChange} 
-                ref={register({
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    message: "Invalid email address"
-                  }
-                })}
+                <input className="inputRequest formContentElement" name="email" type="text" placeholder="Email"
+                  onChange={onChange}
+                  ref={register({
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                      message: "Invalid email address"
+                    }
+                  })}
                 />
                 <span className="registerErrorTextFormat">{errors.email && errors.email.message}</span>
               </label>
               <label>
                 <input className="inputRequest formContentElement" name="phonenumber" type="text" placeholder="Mobile"
-                 onChange={onChange}
-                 maxLength={11}
-                 ref={register({
-                  required: "Phone number is required",
-                  pattern: {
-                    value: /^[0-9\b]+$/,
-                    message: "Invalid phone number"
-                  }
-                })}
+                  onChange={onChange}
+                  maxLength={11}
+                  ref={register({
+                    required: "Phone number is required",
+                    pattern: {
+                      value: /^[0-9\b]+$/,
+                      message: "Invalid phone number"
+                    }
+                  })}
                 />
                 <span className="registerErrorTextFormat">{errors.phonenumber && errors.phonenumber.message}</span>
               </label>
@@ -120,22 +129,25 @@ const Register = () => {
                 </div>
               </label>
               <label>
-                <input className="inputRequest formContentElement" name="password" type="password" placeholder="Password"
-                onChange={onChange}
-                minLength={4}
-                maxLength={30}
-                ref={register({
-                  required: "Password is required",
-                  pattern: {
-                    value: /^[a-z][a-z0-9]+$/,
-                    message: "Password begin with a letter and includes number !"
-                  }
-                })}
+                <input className="inputRequest formContentElement" name="password" type="password" placeholder="eg: P@ssW0rd"
+                  onChange={onChange}
+                  minLength={4}
+                  maxLength={30}
+                  ref={register({
+                    required: "Password is required",
+                    pattern: {
+                      value: /^(?=.*?\d)(?=.*?[a-zA-Z])[a-zA-Z\d]+$/,
+                      message: "Password begin with a letter and includes number !"
+                    }
+                  })}
                 />
-                 <span className="registerErrorTextFormat">{errors.password && errors.password.message}</span>
+                <span className="registerErrorTextFormat">{errors.password && errors.password.message}</span>
               </label>
             </div>
-            <div className="submitButtonDiv formElement">
+            <label>
+              <span className="registerValidationText">{helperText}</span>
+            </label>
+            <div className="submitButtonDiv formElement" style={{ margin: isError ? '65px 0 20px 0' : '20px 0 20px 0' }}>
               <button type="submit" className="submitButton">Register</button>
             </div>
           </form>
@@ -144,8 +156,8 @@ const Register = () => {
       <div className="soccerField_Register">
         <img src=""></img>
         <span className="joinAboutus_data_1">
-                 {isSent ? thankYouMessage : form }
-        </span> 
+          {isSent ? thankYouMessage : form}
+        </span>
       </div>
     </div>
   );

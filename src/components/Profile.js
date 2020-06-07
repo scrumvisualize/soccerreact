@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useForm } from 'react-hook-form';
 import Axios from "axios";
 
 const Profile = () => {
@@ -7,9 +8,12 @@ const Profile = () => {
   const [picture, setPicture] = useState('');
   const [playerProfile, setPlayerProfile] = useState([]);
   const loginUserEmail = localStorage.getItem('loginEmail');
+  const [disabled, setDisabled] = useState(true);
+  const { handleSubmit, register, errors } = useForm();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const onSubmit = () => {
+    //e.preventDefault()
+    setDisabled(disabled);
   }
 
   const onChangePicture = e => {
@@ -71,7 +75,7 @@ const Profile = () => {
     <div className="register_wrapper">
       <div className="register_player_column_layout_one">
         <div className="register_player_Twocolumn_layout_two">
-          <form onSubmit={handleSubmit} className="myForm">
+          <form onSubmit={handleSubmit(onSubmit)} className="myForm">
             {
               playerProfile.map(({ id, photo, name, email, phonenumber, position, privilege, password }) => (
                 <div key={id}>
@@ -86,13 +90,38 @@ const Profile = () => {
                   </div>
                   <div className="fillContentDiv formElement">
                     <label>
-                      <input className="inputRequest formContentElement" name="name" type="text" value={name} onChange={e => handleChange(e, id)}/>
+                      <input className="inputRequest formContentElement" name="name" type="text" value={name} 
+                      onChange={e => handleChange(e, id)}
+                      maxLength={30}
+                      ref={register({
+                        required: "Full name is required", 
+                        pattern: {
+                          value: /^[a-zA-Z\s]{3,30}$/,
+                          message: "Full name should have minimum of 3 letters"
+                        }
+                      })}
+                      />
+                      <span className="registerErrorTextFormat">{errors.name && errors.name.message}</span>
                     </label>
                     <label>
-                      <input className="inputRequest formContentElement" name="email" type="text" value={email} onChange={e => handleChange(e, id)}/>
+                      <input className="inputRequest formContentElement" name="email" type="text" value={email} 
+                      onChange={e => handleChange(e, id)}
+                      disabled={disabled}
+                      />
                     </label>
                     <label>
-                      <input className="inputRequest formContentElement" name="phonenumber" type="text" value={phonenumber} onChange={e => handleChange(e, id)}/>
+                      <input className="inputRequest formContentElement" name="phonenumber" type="text" value={phonenumber} 
+                      onChange={e => handleChange(e, id)}
+                      maxLength={11}
+                      ref={register({
+                        required: "Phone number is required",
+                        pattern: {
+                          value: /^[0-9\b]+$/,
+                          message: "Invalid phone number"
+                        }
+                       })}
+                      />
+                      <span className="registerErrorTextFormat">{errors.phonenumber && errors.phonenumber.message}</span>
                     </label>
                     <label>
                       <input className="inputRequest formContentElement" name="position" type="text" value={position} onChange={e => handleChange(e, id)}/>
@@ -102,12 +131,24 @@ const Profile = () => {
                         <select name="privilege" id="select" value={privilege} onChange={e => handleChange(e, id)}>
                           {/*<option selected disabled>Choose an option</option> */}
                           <option value="player">PLAYER</option>
-                          <option value="admin">ADMIN</option>
+                          {/*<option value="admin">ADMIN</option>*/}
                         </select>
                       </div>
                     </label>
                     <label>
-                      <input className="inputRequest formContentElement" name="password" type="password" value={password} onChange={e => handleChange(e, id)}/>
+                      <input className="inputRequest formContentElement" name="password" type="password" value={password} 
+                      onChange={e => handleChange(e, id)}
+                      minLength={4}
+                      maxLength={30}
+                      ref={register({
+                      required: "Password is required",
+                      pattern: {
+                        value: /^(?=.*?\d)(?=.*?[a-zA-Z])[a-zA-Z\d]+$/,
+                        message: "Password begin with a letter and includes number !"
+                      }
+                      })}
+                      />
+                      <span className="registerErrorTextFormat">{errors.password && errors.password.message}</span>
                     </label>
                   </div>
                   <div className="submitButtonDiv formElement">

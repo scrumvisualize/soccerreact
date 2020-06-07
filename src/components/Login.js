@@ -15,7 +15,6 @@ const Login = () => {
   const { handleSubmit, register, errors } = useForm();
 
   const onSubmit = () => {
-    //e.preventDefault()
     const fetchData = async () => {
       try {
         const res = await axios.post('http://localhost:8000/service/login', { email, password });
@@ -64,8 +63,8 @@ const Login = () => {
                       message: "Invalid email address"
                     }
                   })}
-                  />
-                  <span className="loginErrorTextFormat">{errors.email && errors.email.message}</span>
+                />
+                <span className="loginErrorTextFormat">{errors.email && errors.email.message}</span>
               </label>
               <label>
                 <input className="inputRequest formContentElement" name="password" type="password" placeholder="Password"

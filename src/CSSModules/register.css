@@ -90,7 +90,6 @@
     flex-grow:1;
     margin-top:10px;
     margin-bottom: 10px;
-    height:380px;
   }
   
   .formContentElement{
@@ -143,10 +142,9 @@
   .submitButton:hover{
     background-color:#1cacdd;
   }
+  
   .submitButtonDiv{
     height:45px;
-    margin-top: 72px;
-    margin-bottom:20px;
   }
   
   select {
@@ -228,4 +226,9 @@
   background-color: #ffffff;
   font-size: x-small;
   height:2px;
+}
+
+.registerValidationText{
+  background-color:#ce4b61;
+  color:#ffffff;
 }
