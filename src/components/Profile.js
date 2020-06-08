@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
+import { useHistory } from "react-router-dom";
 import Axios from "axios";
 
 const Profile = () => {
@@ -8,13 +9,12 @@ const Profile = () => {
   const [picture, setPicture] = useState('');
   const [playerProfile, setPlayerProfile] = useState([]);
   const loginUserEmail = localStorage.getItem('loginEmail');
+  const [updateProfile, setUpdateProfile] = useState({ _id: '', photo: '', name: '', email:'', phonenumber: '', position: '', password: '' })
+  const [isSent, setIsSent] = useState(false);
+  const [helperText, setHelperText] = useState('');
   const [disabled, setDisabled] = useState(true);
   const { handleSubmit, register, errors } = useForm();
-
-  const onSubmit = () => {
-    //e.preventDefault()
-    setDisabled(disabled);
-  }
+  const history = useHistory();
 
   const onChangePicture = e => {
     console.log('picture: ', picture);
@@ -24,6 +24,7 @@ const Profile = () => {
       return false;
     }
   };
+
   // If no profile image is being uploaded, to avoid the broken display of image, display a default image.
   const addDefaultSrc = e => {
     e.target.src = '/images/default-icon.png';
@@ -54,6 +55,7 @@ const Profile = () => {
     });
     */
     setPlayerProfile(tempPlayers);
+    setUpdateProfile({ ...updateProfile, [e.target.name]: e.target.value }); // this is added just to see if its working
   };
 
   useEffect(() => {
@@ -70,6 +72,31 @@ const Profile = () => {
     }
     fetchData();
   }, []);
+
+  const onSubmit = () => {
+    setDisabled(disabled);
+    const fetchData = async () => {
+      try {
+        const params = {
+          email: loginUserEmail,
+        };
+        const data = {photo: updateProfile.photo, name: updateProfile.name, email: updateProfile.email, phonenumber: updateProfile.phonenumber, position: updateProfile.position, password: updateProfile.password}
+        const res = await Axios.put('http://localhost:8000/service/profile', data, {params}); 
+        console.log("Front End update message:" + res.data.success);
+        if (res.data.success) {
+          setIsSent(true);
+          history.push('/')
+        }
+        else {
+          console.log(res.data.message);
+          setHelperText(res.data.message);
+        }
+      } catch (e) {
+        setHelperText(e.response.data.message);
+      }
+    }
+    fetchData();
+  }
 
   return (
     <div className="register_wrapper">
@@ -124,7 +151,17 @@ const Profile = () => {
                       <span className="registerErrorTextFormat">{errors.phonenumber && errors.phonenumber.message}</span>
                     </label>
                     <label>
-                      <input className="inputRequest formContentElement" name="position" type="text" value={position} onChange={e => handleChange(e, id)}/>
+                      <input className="inputRequest formContentElement" name="position" type="text" value={position} 
+                      onChange={e => handleChange(e, id)}
+                      maxLength={30}
+                      ref={register({
+                        pattern: {
+                          value: /^[a-zA-Z\s]{2,30}$/,
+                          message: "Position should have minimum of 2 letters"
+                        }
+                      })}
+                      />
+                      <span className="registerErrorTextFormat">{errors.position && errors.position.message}</span>
                     </label>
                     <label>
                       <div className="select" >
@@ -151,6 +188,9 @@ const Profile = () => {
                       <span className="registerErrorTextFormat">{errors.password && errors.password.message}</span>
                     </label>
                   </div>
+                  <label>
+                    <span className="profileValidationText">{helperText}</span>
+                  </label>
                   <div className="submitButtonDiv formElement">
                     <button type="submit" className="submitButton">Save</button>
                   </div>

@@ -34,7 +34,7 @@ module.exports = function(sequelize, DataTypes) {
 		
 		},
 		position: {
-			type: DataTypes.ENUM('FORWARD','MID-FIELD','DEFENDER','GK'),
+			type: DataTypes.STRING(100),
 		
 		}
 	}, {

@@ -54,7 +54,7 @@ app.get('/service/players', async (req, res) => {
 
 });
 
-// This method is used to register a player via Register screen. Please look for Register.js
+// This method is used to Register a player via Register screen. Please look for Register.js
 // After successfull registration, system will navigate to Login screen.
 
 app.put('/service/player', async (req, res, next) => {
@@ -118,6 +118,37 @@ app.post('/service/profile', (req, res) => {
   console.log('service/profile');
   res.json({ express: "player profile" })
 });
+
+
+// This is a PUT method, used to perform update player Profile. Since email field is unique and field is kept as non editable. 
+// All values except id, email and privilege should allow to update.
+
+app.put('/service/profile', async (req, res, next) => {
+
+  try {
+    const userEmail = req.query.email;
+    var selector = {
+      where: { email: userEmail }
+    };
+    //Now below cleanData will remove all null/blank values coming in req.body and update field values with data.
+    const updateData = req.body;
+    function cleanData(obj) {
+      for (var propName in obj) {
+        if (obj[propName] == '' || obj[propName] == undefined || obj[propName] == null) {
+          delete obj[propName];
+        }
+      }
+    }
+    cleanData(updateData);
+    const updatePlayer = await UserModel.update(updateData, selector);
+    console.log("Server side update method log:" + updatePlayer);
+    res.status(200).json({ success: true });
+  } catch (err) {
+    return next(err);
+  }
+
+});
+
 
 // This post method is used to login a player via login screen.
 // After successfull login it will display Home screen with Players.

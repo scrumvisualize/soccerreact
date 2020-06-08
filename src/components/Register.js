@@ -117,7 +117,17 @@ const Register = () => {
                 <span className="registerErrorTextFormat">{errors.phonenumber && errors.phonenumber.message}</span>
               </label>
               <label>
-                <input className="inputRequest formContentElement" name="position" type="text" placeholder="Position" onChange={onChange} />
+                <input className="inputRequest formContentElement" name="position" type="text" placeholder="Position" 
+                onChange={onChange} 
+                maxLength={30}
+                ref={register({
+                  pattern: {
+                    value: /^[a-zA-Z\s]{2,30}$/,
+                    message: "Position should have minimum of 2 letters"
+                  }
+                })}
+                />
+                <span className="registerErrorTextFormat">{errors.position && errors.position.message}</span>
               </label>
               <label>
                 <div className="select" >

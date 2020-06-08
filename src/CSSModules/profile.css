@@ -223,3 +223,8 @@
   font-weight: bold;
   padding-bottom: 5px;
 }
+
+.profileValidationText{
+  background-color:#ce4b61;
+  color:#ffffff;
+}
