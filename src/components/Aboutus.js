@@ -99,7 +99,7 @@ const Aboutus = () => {
                 {
                 displaynewsDetails.map(( {id, newstitle, newsdetails , createdAt} ) => (
                 <span  key={id} className="newsPlace">
-                  <span className="dateAndTimeDisplay" key={createdAt}><b>{moment(createdAt).format('DD/MM/YYYY, h:mm')}</b></span>
+                  <span className="dateAndTimeDisplay" key={createdAt}><b>{moment(createdAt).format('DD/MM/YYYY, HH:mm')}</b></span>
                   <b key={newstitle}>{newstitle}</b><br/><br/>
                   <span className="newsContent" key={newsdetails}>{newsdetails}</span>
                 </span>
