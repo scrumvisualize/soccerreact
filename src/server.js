@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const { Sequelize, DataTypes } = require("sequelize");
-
 const userSchema = require('./server/models/user');
+const newsSchema = require('./server/models/news');
 const cors = require("cors");
 
 const port = 8000;
@@ -29,7 +29,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
 });
 
 const UserModel = userSchema(sequelize, DataTypes);
-
+const NewsModel = newsSchema(sequelize, DataTypes);
 
 app.use(cors({
   origin: "http://localhost:3000"
@@ -177,10 +177,33 @@ app.post('/service/login', async (req, res) => {
 });
 
 
-//Added to test and see client/server interaction from Aboutus screen, ignore this at the moment.
-app.post('/service/news', (req, res) => {
-  console.log(req.body.newstitle);
-  res.json({ express: "news" })
+//This is to insert News details created from Aboutus page by an Admin user:
+
+app.post('/service/news', async (req, res) => {
+  try {
+    const userEmail = req.query.email;
+    const newDetails = await NewsModel.create({...req.body, email:userEmail});   
+    console.log("Server side news post method log:" + newDetails);
+    res.status(200).json({ success: true });
+  } catch (e){
+    res.status(500).json({ message: e.message });
+  }
+});
+
+//This is to get News details from news table and to display in Aboutus page:
+app.get('/service/news', async (req, res) => {
+  try {
+    const userEmail = req.query.email;
+    const newsdetails = await NewsModel.findAll({
+       order: [
+        [sequelize.literal('createdAt'), 'desc']
+        ]
+      });
+    console.log("Server side news post method log:" + newsdetails);
+    res.status(200).json({ newsdetails });
+  } catch (e){
+    res.status(500).json({ message: e.message });
+  }
 });
 
 

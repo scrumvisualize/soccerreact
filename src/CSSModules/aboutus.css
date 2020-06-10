@@ -4,8 +4,25 @@
     flex: 1;  
   }  
   
+  .col-newsarea {
+    flex: 1;  
+    height: 400px;
+    overflow: auto;
+  }
+  .col-newsarea h3{
+    padding-left: 10px;
+  }
   .col-complementary {
     flex: 1;  
+  }
+  .newsContent{
+    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+    word-break: break-all;
   }
   
   /* Responsive: */
@@ -17,7 +34,12 @@
   }
   
   /* etc */
-  
+  .addTeamNews{
+    flex: 1;  
+  }
+  .addTeamNews h3{
+    padding-left: 10px;
+  }
   .col {
     width:95%;
     padding: 1em;
@@ -33,14 +55,15 @@
   .newsPlace{
     display: block;
     width:95%;
-    height:100px;
+    height:140px;
     margin-top: 10px;
     margin-left: 100px;
     text-decoration: none;
     margin: 20px 0 0 10px;
     border: solid 1px #f2f2f2;
-    box-shadow: 0 1px 2px 0 rgba(88, 87, 87, 0.5);
+    box-shadow: 0 2px 1px 0 rgba(88, 87, 87, 0.5);
     transition: .3s;
+    overflow: auto;
   }
  
   .specialAboutus_data_1, .col-main h3, .joinAboutus_data_1, .col-complementary h3 {
@@ -85,4 +108,27 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 10vh 10vh;
   }
+}
+.newsErrorTextFormat{
+  color: #eb2942;
+  background-color: #ffffff;
+  font-size: x-small;
+  height:1px;
+}
+.newsValidationText{
+  background-color:#ce4b61;
+  color:#ffffff;
+}
+.dateAndTimeDisplay{
+  float:right;
+}
+
+.myFormAbouts {
+  background-color: white;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  min-width: 360px;
+  border-radius: 5px;
+  height: 450px;
 }

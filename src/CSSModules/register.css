@@ -179,10 +179,10 @@
   select {
     flex: 1;
     padding: 0 .5em;
-    color: rgb(57, 59, 136);
+    color: #0f0f0f;
     cursor: pointer;
     font-size:1em;
-    font-family:"ebrima";
+    font: 400 13.3333px Arial;
   }
   .select #select{
     margin-left: 8px !important ;
@@ -202,6 +202,7 @@
     transition: .25s all ease;
     font-size:1em;
     font-family:"ebrima";
+
   }
   /* Transition */
   .select:hover::after {
