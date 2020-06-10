@@ -64,6 +64,7 @@
     box-shadow: 0 2px 1px 0 rgba(88, 87, 87, 0.5);
     transition: .3s;
     overflow: auto;
+    background-color: #f2f2f2;
   }
  
   .specialAboutus_data_1, .col-main h3, .joinAboutus_data_1, .col-complementary h3 {

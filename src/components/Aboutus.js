@@ -3,26 +3,30 @@ import { useForm } from 'react-hook-form';
 import * as moment from 'moment'
 import Axios from "axios";
 
-const Aboutus = () => {
 
+const Aboutus = () => {
+  
   const [newDetails, setNewsDetails] = useState({ _id: '', newstitle: '', newsdetails: ''})
   const [displaynewsDetails, setShowNewsDetails] = useState([]);
   const [isSent, setIsSent] = useState(false);
   const [showNewsSection, setShowNewsSection] = useState({ show: false });
   const [helperText, setHelperText] = useState('');
   const loginUserEmail = localStorage.getItem('loginEmail');
-  const { handleSubmit, register, errors } = useForm();
+  const { handleSubmit, register, errors, reset } = useForm();
   const thankYouMessage = <p>Thank you for your input!</p>
   const form = <form>...</form>
   const privilege = localStorage.getItem('Privilege');
   const [isError, setIsError] = useState(false);
   const isMounted = useRef(false);
+ 
 
   useEffect(() => {
     isMounted.current = true;
     return () => isMounted.current = false;
   }, []);
 
+
+  
   useEffect(()=>{
     displayNewsSection(privilege);
   },[]);
@@ -59,9 +63,8 @@ const Aboutus = () => {
         const res = await Axios.post('http://localhost:8000/service/news', newDetails, {params}); 
         console.log("News post message:" + res.data.success);
         if (res.data.success) {
-          setNewsDetails({newstitle: '', newsdetails: ''});
-          setIsSent(true);
-          
+          setIsSent(true); 
+          reset();
         }
         else {
           console.log(res.data.message);
@@ -201,7 +204,7 @@ const Aboutus = () => {
             </div>   
               )}
           </div>
-          )
+        )
 }
 
 export default Aboutus;
