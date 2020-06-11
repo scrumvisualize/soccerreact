@@ -206,6 +206,22 @@ app.get('/service/news', async (req, res) => {
   }
 });
 
+//This is to delete News details from news table from Aboutus page by ADMIN user:
+
+app.delete('/service/news', async (req, res) => {
+  try {
+    const userId = req.body.id;
+    console.log("Req" + userId);
+    const deleteNews = await NewsModel.destroy({
+      where: { id: userId }
+    })
+    res.status(200).json({ deleteNews });
+  } catch (e) {
+    res.status(500).json({ fail: e.message });
+  }
+});
+
+
 
 (async () => {
   try {

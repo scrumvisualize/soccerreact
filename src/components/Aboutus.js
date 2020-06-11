@@ -10,6 +10,7 @@ const Aboutus = () => {
   const [displaynewsDetails, setShowNewsDetails] = useState([]);
   const [isSent, setIsSent] = useState(false);
   const [showNewsSection, setShowNewsSection] = useState({ show: false });
+  const [newsdeleteBtn, setNewsDeleteBtn] = useState({ show: false });
   const [helperText, setHelperText] = useState('');
   const loginUserEmail = localStorage.getItem('loginEmail');
   const { handleSubmit, register, errors, reset } = useForm();
@@ -29,6 +30,7 @@ const Aboutus = () => {
   
   useEffect(()=>{
     displayNewsSection(privilege);
+    displayNewsDeleteBtn(privilege);
   },[]);
 
   const onChange = (e) => {
@@ -85,6 +87,30 @@ const Aboutus = () => {
     }
   }
 
+  const displayNewsDeleteBtn = (privilege) =>{
+    if (privilege === "ADMIN") {
+      setNewsDeleteBtn({ show: true })
+    } else {
+      setNewsDeleteBtn({ show: false })
+    }
+  }
+  const handleClick = (id) =>{
+    try {
+      Axios.delete('http://localhost:8000/service/news', {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          'id': id
+        }
+      });
+      const restOfNewsResults = displaynewsDetails.filter((result) => result.id !== id)
+      setShowNewsDetails(restOfNewsResults);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
           <div className="container">
             <div className="middlerrowData">
@@ -102,6 +128,12 @@ const Aboutus = () => {
                   <span className="dateAndTimeDisplay" key={createdAt}><b>{moment(createdAt).format('DD/MM/YYYY, HH:mm')}</b></span>
                   <b key={newstitle}>{newstitle}</b><br/><br/>
                   <span className="newsContent" key={newsdetails}>{newsdetails}</span>
+                  { 
+                    newsdeleteBtn.show && (
+                    <div className="container">
+                      <img alt="Delete" className="deleteNewsImg" src="images/deletenews.png" onClick={() => handleClick(id)}></img>
+                    </div>
+                  )}
                 </span>
                 ))
                 }
@@ -131,7 +163,7 @@ const Aboutus = () => {
                   Later in the year, there is a football event that 
                   anyone is welcome to come to. To find more 
                   information on this please contact 
-                  mysoccerlife@ball.com.kick
+                  mysoccer@ball.com.kick
                   This event will be on the 7th of november,
                   once the restrictions ease. We are alerting
                   you now this event may/can be cancelled,
