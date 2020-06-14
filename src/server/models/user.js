@@ -26,11 +26,11 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false
 		},
 		privilege: {
-			type: DataTypes.ENUM('PLAYER','ADMIN'),
+			type: DataTypes.STRING(100),
 		
 		},
 		photo: {
-			type: DataTypes.STRING(30),
+			type: DataTypes.STRING(300),
 		
 		},
 		position: {

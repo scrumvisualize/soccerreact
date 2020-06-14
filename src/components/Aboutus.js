@@ -121,7 +121,7 @@ const Aboutus = () => {
               <img alt="" src="/images/image-1.jpg"></img>
               </span> 
               <span className="col col-newsarea">
-                <h3>Recent News:</h3>
+                <h3>&#9917; Updates !</h3>
                 {
                 displaynewsDetails.map(( {id, newstitle, newsdetails , createdAt} ) => (
                 <span  key={id} className="newsPlace">
@@ -143,18 +143,17 @@ const Aboutus = () => {
               <span className="col col-main">
                 <h3>What is going on?</h3>
                 <span className="specialAboutus_data_1">
-                  Hey guys! If you read this blog, you
-                  will know that there is a football event 
-                  (see below for more information)
-                  coming up in three months time!
-                  We are all very excited to see what 
-                  skills you have got! Dan is excited 
-                  show you some futsal techniques too!
-                   Unfortunately,this event can be cancelled 
-                  so we need you to stay calm and hope that 
-                  the next event will not go wrong.
-                  #StayCovidSafe,
+                  Hey guys! If you didn't know there is a 
+                  new online kids program for football!
+                  We have been noticing that there is a little
+                  problem with the software as the login doesn't 
+                  let you in. To improve the software we are 
+                  letting you know that we would like some time 
+                  to let the tech team have some time to fix
+                  this issue. Bye for now!
                   The Team
+
+                  
                 </span>
               </span> 
               <span className="col col-complementary">
@@ -175,6 +174,7 @@ const Aboutus = () => {
               </span>
               </span>  
             </div>
+            <h2>Core <span>Team:</span></h2>
             <div className='app-layout'>
               <div className='box tweets'>1</div>
               <div className='box replies'>2</div>
@@ -228,14 +228,74 @@ const Aboutus = () => {
                 </label>
               </span> 
               <span className="col col-complementary">
-              <h3>Successfull Message: </h3>
+              <h3>&#128154; Message: </h3>
               <span className="joinAboutus_data_1">
                  {isSent ? thankYouMessage : form }
               </span>  
+              
               </span>  
             </div>   
               )}
+              <span className="newImageback">
+               <img className="newsImagesection" src="images/blazecut.png"></img>         
+              </span>
+              <section id="services" className="services">
+                <div className="sectioncontainer">
+                  <div className="row">
+                    <div className="section-title">
+                      <h2>Our <span>Interests</span></h2>
+                      <span className="heading-line"></span> </div>
+                    <div className="service-callouts">
+                      <div className="col-sm-6 col-md-4">
+                        <div className="services-box">
+                          <div className="services-iconbox"><i className="lnr lnr-eye"></i></div>
+                          <h2>Weekend Soccer</h2>
+                          <p>Soccer is just not a game for us. Its a part of our life. We co-ordinate among ourselves and play soccer during week end.</p>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-4" data-wow-delay="0.3s">
+                        <div className="services-box">
+                          <div className="services-iconbox"><i className="lnr lnr-location"></i></div>
+                          <h2>Soccer Matches</h2>
+                          <p>We are keen to play 7-a side, 11-a side matches this year. Talk to us we will respond ! <a href="url">http://southsidesoccer.com.au</a></p>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-4" data-wow-delay="0.5s">
+                        <div className="services-box">
+                          <div className="services-iconbox"><i className="lnr lnr-laptop-phone"></i></div>
+                          <h2>Healthy Discussions</h2>
+                          <p>Constructive and healthy discussion are part of our soccer life, we respect and listen to each others</p>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-4" data-wow-delay="0.7s">
+                        <div className="services-box">
+                          <div className="services-iconbox"><i className="lnr lnr-chart-bars"></i></div>
+                          <h2>Community Soccer</h2>
+                          <p>Give something to community- whether its an advice, help or a community game, doesn't matter we all give a shout-out</p>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-4" data-wow-delay="0.9s">
+                        <div className="services-box">
+                          <div className="services-iconbox"><i className="lnr lnr-envelope"></i></div>
+                          <h2>Soccer Techniques</h2>
+                          <p>Love to learn something new. Recently we used drone to record our weekend soccer match and made a self assessment</p>
+                        </div>
+                      </div>
+                      <div className="col-sm-6 col-md-4" data-wow-delay="1.1s">
+                        <div className="services-box">
+                          <div className="services-iconbox"><i className="lnr lnr-earth"></i></div>
+                          <h2>Soccer Gears</h2>
+                          <p>Who doesn't like to have a pair of new boots ! All of us would like to wrap ourself with new gadgets &amp; gears </p>
+                          <p>Any offers near by please let us know ! </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            <footer className="footerClass">Copyright @ 2020</footer>
           </div>
+          
         )
 }
 

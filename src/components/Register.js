@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 
 const Register = () => {
 
+  const [preview, setPreview] = useState('');
   const [picture, setPicture] = useState('');
   const [formRegister, setRegister] = useState({ _id: '', photo: '', name: '', email: '', phonenumber: '', position: '', privilege: '', password: '' })
   const [isSent, setIsSent] = useState(false);
@@ -20,9 +21,10 @@ const Register = () => {
 
   const onChangePicture = e => {
     console.log('picture: ', picture);
-    //setPicture(e.target.files[0]);
     if (e.target.files.length) {
-      setPicture(URL.createObjectURL(e.target.files[0]));
+      //setPicture(URL.createObjectURL(e.target.files[0]));
+      setPreview(URL.createObjectURL(e.target.files[0]));
+      setPicture(e.target.files[0]);
       setRegister({ ...formRegister, [e.target.name]: e.target.value });
     } else {
       return false;
@@ -38,11 +40,24 @@ const Register = () => {
     e.persist();
     setRegister({ ...formRegister, [e.target.name]: e.target.value });
   }
+  
+const onSubmit = e => {
+const formData = new FormData();
 
-  const onSubmit = () => {
+for(let key in formRegister) {
+  formData.append(key,formRegister[key]);
+}
+
+if (picture) formData.append("photo", picture);
+
+const config = {
+    headers: {
+        'content-type': 'multipart/form-data' // <-- Set header for 
+    }
+}
     const fetchData = async () => {
       try {
-        const res = await axios.put('http://localhost:8000/service/player', formRegister);
+        const res = await axios.put('http://localhost:8000/service/player', formData, config);
         console.log("Front End success message:" + res.data.success);
         if (res.data.success) {
           setIsSent(true);
@@ -63,7 +78,7 @@ const Register = () => {
     <div className="register_wrapper">
       <div className="register_player_column_layout_one">
         <div className="register_player_Twocolumn_layout_two">
-          <form onSubmit={handleSubmit(onSubmit)} className="myForm">
+          <form onSubmit={handleSubmit(onSubmit)} className="myForm" encType="multipart/form-data">
             <div className="formInstructionsDiv formElement">
               <h2 className="formTitle" >Sign Up</h2>
               <p className="instructionsText">Not registered yet, please register now !</p>
@@ -71,7 +86,7 @@ const Register = () => {
                 <input id="profilePic" name="photo" type="file" onChange={onChangePicture} />
               </div>
               <div className="previewProfilePic" >
-                <img alt="" onError={addDefaultSrc} name="previewImage" className="playerProfilePic_home_tile" src={picture}></img>
+                <img alt="" onError={addDefaultSrc} name="previewImage" className="playerProfilePic_home_tile" src={preview}></img>
               </div>
             </div>
             <div className="fillContentDiv formElement">
@@ -131,8 +146,8 @@ const Register = () => {
               </label>
               <label>
                 <div className="select" >
-                  <select name="privilege" id="select" onChange={onChange}>
-                    {/*<option selected disabled>Choose an option</option> */}
+                  <select defaultValue={'DEFAULT'} name="privilege" id="select" onChange={onChange}>
+                    <option value="DEFAULT" disabled>Choose an option</option>
                     <option value="player">PLAYER</option>
                     <option value="admin">ADMIN</option>
                   </select>

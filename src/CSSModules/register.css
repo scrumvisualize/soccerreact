@@ -179,10 +179,9 @@
   select {
     flex: 1;
     padding: 0 .5em;
-    color: #0f0f0f;
     cursor: pointer;
     font-size:1em;
-    font: 400 13.3333px Arial;
+    font: ebrima;
   }
   .select #select{
     margin-left: 8px !important ;

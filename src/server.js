@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require("body-parser");
+var multer  = require('multer')
+var path = require('path');
 const { Sequelize, DataTypes } = require("sequelize");
 const userSchema = require('./server/models/user');
 const newsSchema = require('./server/models/news');
@@ -37,6 +39,21 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//app.use(express.static(path.join(__dirname, 'images')));
+app.use(express.static(path.join(__dirname, 'public')));
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/images')
+  },
+  filename: function (req, file, cb) {
+    var ext = file.originalname.split('.').pop();
+    cb(null, file.fieldname + '-' + Date.now() + '.' + ext);
+  }
+})
+
+var upload = multer({ storage: storage });
+
 // This get method is for displaying all players in Home screen. It should display all registered players,
 // irrespective of privileges.
 
@@ -57,13 +74,35 @@ app.get('/service/players', async (req, res) => {
 // This method is used to Register a player via Register screen. Please look for Register.js
 // After successfull registration, system will navigate to Login screen.
 
-app.put('/service/player', async (req, res, next) => {
+app.put('/service/player',  upload.single('photo'), async (req, res, next) => {
   try {
-    const userEmail = req.body.email;
+    const userName = req.body.name;
+    const userEmail = req.body.email; //exisiting code
+    const userPhone = req.body.phonenumber;
+    const userPassword = req.body.password;
+    const userPrivilege = req.body.privilege;
+    const userPrivilegeUppercase = userPrivilege.toUpperCase();
+   //const userImage = req.body.photo;
+    const userPosition = req.body.position;
+    console.log(req.file);
+
     const playerEmail = await UserModel.count({ where: { email: userEmail } });
     if (playerEmail == 0) {
+      
+      if(req.file){   //new code to check the image starts here
+        var imageOriginalName = req.file.originalname;
+        var imageName = req.file.fieldname;
+        var imageMime = req.file.mimetype;
+        var imagePath = req.file.path;
+        var revisedPath = imagePath.replace(/^public\\/, '');
+        var imageSize = req.file.size;
+    } else {
+        var imageName = "noimage.png";
+    }    //ends here
+    
       //If there is no email found, procced with normal registration here...
-      const addPlayer = await UserModel.create(req.body);
+      var playerData = {name:userName, email:userEmail, phonenumber:userPhone, password:userPassword, privilege:userPrivilegeUppercase, photo: revisedPath, position: userPosition };
+      const addPlayer = await UserModel.create(playerData);
       console.log("Server side PUT method log:" + addPlayer);
       res.status(200).json({ success: true });
     } else {

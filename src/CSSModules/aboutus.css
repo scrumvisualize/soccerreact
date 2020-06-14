@@ -62,7 +62,7 @@
     box-shadow: 0 2px 1px 0 rgba(88, 87, 87, 0.5);
     transition: .3s;
     overflow: auto;
-    background-color: #f2f2f2;
+    background-color: #f7f7f7;
   }
  
   .specialAboutus_data_1, .col-main h3, .joinAboutus_data_1, .col-complementary h3 {
@@ -129,7 +129,8 @@
   width: 95%;
   min-width: 360px;
   border-radius: 5px;
-  height: 450px;
+  height: 300px;
+  margin-top: 20px;
 }
 .deleteNewsImg{
   display: flex;
@@ -158,4 +159,100 @@
     position: relative;
     z-index:1000
   }
+}
+
+.services {
+  padding: 65px 0 50px;
+  background: #f7f7f7;
+}
+
+section {
+  width: 100%;
+  float: left;
+  padding: 80px 0;
+}
+
+section {
+  width: 100%;
+  float: left;
+  padding: 80px 0;
+}
+.sectioncontainer {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.sectioncontainer {
+  margin: 0 auto;
+  max-width: 90%;
+}
+.section-title {
+  text-align: center;
+  margin: 0 0 40px;
+}
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.service-callouts {
+  text-align: center;
+}
+.service-callouts div {
+  padding-bottom: 30px;
+}
+
+.service-callouts .services-box {
+  padding: 30px;
+  background: #fff;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+@media (min-width: 992px){
+  .col-md-4 {
+    width: 33.33333333%;
+}
+}
+
+@media (min-width: 992px){
+  .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9 {
+    float: left;
+}
+}
+
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.newImageback{
+  width:100%;
+  position: relative;
+}
+.newsImagesection{
+  width: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+@media (max-width: 500px){
+  .newsImagesection{
+    width: 400px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-left: 0px;
+    padding-right: 40px;
+  }
+}
+
+.footerClass{
+  width: 100%;
+  background-color: #f7f7f7;
+  text-align: center;
+}
+h2{
+padding-left: 10px;
 }

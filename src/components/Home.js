@@ -13,6 +13,7 @@ const Home = () => {
   const [deleteDialog, setDeleteDialog] = useState(false);
   const [playerId, setPlayerId] = useState("");
   const isMounted = useRef(false);
+  const [isLoading, setIsLoading] = useState(true);
 
 
   const handleChange = event => {
@@ -27,6 +28,7 @@ const Home = () => {
 
 
   useEffect(() => {
+    setTimeout ( () => {
     const fetchData = async () => {
       try {
         const res = await Axios.get('http://localhost:8000/service/players');
@@ -36,12 +38,17 @@ const Home = () => {
           const privilege = localStorage.getItem('Privilege');
           console.log("What is getting in Front End:" + privilege);
           showDeleteIcon(privilege);
+          setIsLoading(false);
         }
       } catch (e) {
+        if (isMounted.current) {
+          setIsLoading(false);
+        }
         console.log(e);
       }
     }
     fetchData();
+    }, 1500);
   }, []);
 
 
@@ -107,11 +114,20 @@ const Home = () => {
             </div>
           </label>
         </div>
-        {!searchResults.length && (<div> <p className="noSearchData"> Did not match any results! </p> </div>)}
+        <div>
+        {!searchResults.length && !isLoading && (<div> <p className="noSearchData"> Does not match any results! </p> </div>)}
         <div className="playerList_home_page">
+        {isLoading ? (
+        <div className="loader">
+        <div className="bubble"></div>
+        <div className="bubble"></div>
+        <div className="bubble"></div>
+        <div className="bubble"></div>
+      </div>
+      ) : (
           <div className="grid-container">
             {
-              searchResults.map(({ id, image, position, phonenumber, name }) => (
+              searchResults.map(({ id, photo, position, phonenumber, name }) => (
                 <div key={id} className="grid-item">
                   {
                     deleteIcon.show && (
@@ -120,7 +136,7 @@ const Home = () => {
                       </span>
                     )}
                   <div>
-                    <img alt="" className="playerProfilePic_home_tile" key={image} src={image}></img>
+                    <img alt="" className="playerProfilePic_home_tile" key={photo} src={photo}></img>
                   </div>
                   <div className="playerProfile_grid_border">
                     <span className="rec_name_position_data">
@@ -138,7 +154,9 @@ const Home = () => {
               ))
             }
           </div>
+         )}
         </div>
+       </div> 
       </div>
       <AlertDialog
         onDelete={onDelete}
