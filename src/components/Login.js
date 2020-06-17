@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from 'react-hook-form';
 import { useHistory } from "react-router-dom";
+import UserProfileContext from '../context';
 
 const Login = () => {
-
+  const {loginPhoto, setLoginPhoto} = useContext(UserProfileContext);
   const [loginData, setLoginData] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

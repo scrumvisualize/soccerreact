@@ -1,0 +1,17 @@
+.error_wrapper{
+    width: 100%;
+}
+
+.error404Display{
+    font-size: 100px;
+    color: rgb(95, 207, 235);
+    text-align: center;
+    margin-top: 100px;
+}
+
+.error404Text{
+    font-size: 30px;
+    color: rgb(15, 15, 15);
+    text-align: center;
+    margin-top: 100px;
+}

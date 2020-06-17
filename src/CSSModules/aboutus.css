@@ -3,10 +3,14 @@
 .col-main {
     flex: 1;  
   }  
-  
+  .updatesHeader {
+  margin-left: 0px;
+  }
   .col-newsarea {
     flex: 1;  
     overflow: auto;
+    height:500px;
+    width:1200px;
   }
   .col-newsarea h3{
     padding-left: 10px;
@@ -46,6 +50,10 @@
     margin-left: 10px;
     margin-right: 10px;
   }
+  .leftsideTopYellowImage{
+    width:70%;
+    margin-left: 50px;
+  }
   
   .middlerrowData{
       width:100%;
@@ -53,11 +61,12 @@
   }
   .newsPlace{
     display: block;
-    width:95%;
+    width:97%;
     margin-top: 10px;
     margin-left: 100px;
+    padding-right: 5px;
     text-decoration: none;
-    margin: 20px 0 0 10px;
+    margin: 20px 10px 0 10px;
     border: solid 1px #f2f2f2;
     box-shadow: 0 2px 1px 0 rgba(88, 87, 87, 0.5);
     transition: .3s;
@@ -97,7 +106,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 40vh;
-  margin: 10px;
+  margin: 20px;
 }
 
 /* try to resize the screen */
@@ -254,5 +263,5 @@ section {
   text-align: center;
 }
 h2{
-padding-left: 10px;
+padding-left: 20px;
 }

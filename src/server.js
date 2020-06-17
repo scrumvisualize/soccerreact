@@ -39,7 +39,9 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//app.use(express.static(path.join(__dirname, 'images')));
+// The below define the folder location and storage of file using multer. File will be saved
+// with field name, date stamp and extension and then upload variable will have the below information.
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 var storage = multer.diskStorage({
@@ -82,25 +84,23 @@ app.put('/service/player',  upload.single('photo'), async (req, res, next) => {
     const userPassword = req.body.password;
     const userPrivilege = req.body.privilege;
     const userPrivilegeUppercase = userPrivilege.toUpperCase();
-   //const userImage = req.body.photo;
     const userPosition = req.body.position;
     console.log(req.file);
 
     const playerEmail = await UserModel.count({ where: { email: userEmail } });
     if (playerEmail == 0) {
       
-      if(req.file){   //new code to check the image starts here
+      if(req.file){
         var imageOriginalName = req.file.originalname;
         var imageName = req.file.fieldname;
         var imageMime = req.file.mimetype;
         var imagePath = req.file.path;
-        var revisedPath = imagePath.replace(/^public\\/, '');
+        var revisedPath = imagePath.replace(/^public\\/, '');  // Regx will remove the word public from file path.
         var imageSize = req.file.size;
     } else {
         var imageName = "noimage.png";
-    }    //ends here
-    
-      //If there is no email found, procced with normal registration here...
+    }    
+      //If the email doesn't exists, procced with normal registration here...
       var playerData = {name:userName, email:userEmail, phonenumber:userPhone, password:userPassword, privilege:userPrivilegeUppercase, photo: revisedPath, position: userPosition };
       const addPlayer = await UserModel.create(playerData);
       console.log("Server side PUT method log:" + addPlayer);
@@ -162,15 +162,38 @@ app.post('/service/profile', (req, res) => {
 // This is a PUT method, used to perform update player Profile. Since email field is unique and field is kept as non editable. 
 // All values except id, email and privilege should allow to update.
 
-app.put('/service/profile', async (req, res, next) => {
+app.put('/service/profile', upload.single('photo'), async (req, res, next) => {
 
   try {
+
+    const userName = req.body.name;
+    const userReqEmail = req.body.email; 
+    const userPhone = req.body.phonenumber;
+    const userPassword = req.body.password;
+    const userPosition = req.body.position;
+    console.log(req.file);
+
     const userEmail = req.query.email;
+
     var selector = {
       where: { email: userEmail }
     };
+
+    if(req.file){
+      var imageOriginalName = req.file.originalname;
+      var imageName = req.file.fieldname;
+      var imageMime = req.file.mimetype;
+      var imagePath = req.file.path;
+      var revisedPath = imagePath.replace(/^public\\/, '');  // Regx will remove the word public from file path.
+      var imageSize = req.file.size;
+  } else {
+      var imageName = "noimage.png";
+  } 
+  var updateData = {name:userName, email:userReqEmail, phonenumber:userPhone, password:userPassword, photo: revisedPath, position: userPosition };
+
     //Now below cleanData will remove all null/blank values coming in req.body and update field values with data.
-    const updateData = req.body;
+    //const updateData = req.body;
+    
     function cleanData(obj) {
       for (var propName in obj) {
         if (obj[propName] == '' || obj[propName] == undefined || obj[propName] == null) {

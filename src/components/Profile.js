@@ -1,25 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
+import UserProfileContext from '../context';
+
 
 const Profile = () => {
 
-  const [email, setEmail] = useState('');
-  const [picture, setPicture] = useState('');
+  //const {photo, setPhoto} = useContext(UserProfileContext);
+  const [preview, setPreview] = useState('');
+  //const [picture, setPicture] = useState('');
+  const {picture, setPicture} = useContext(UserProfileContext);
   const [playerProfile, setPlayerProfile] = useState([]);
   const loginUserEmail = localStorage.getItem('loginEmail');
-  const [updateProfile, setUpdateProfile] = useState({ _id: '', photo: '', name: '', email:'', phonenumber: '', position: '', password: '' })
+  const {profile, setProfile} = useContext(UserProfileContext);
+  const [updateProfile, setUpdateProfile] = useState({ _id: '', photo: '', name: '', email:'', phonenumber:'', position:'', privilege:'', password:''});
   const [isSent, setIsSent] = useState(false);
   const [helperText, setHelperText] = useState('');
   const [disabled, setDisabled] = useState(true);
   const { handleSubmit, register, errors } = useForm();
   const history = useHistory();
+  
 
   const onChangePicture = e => {
     console.log('picture: ', picture);
     if (e.target.files.length) {
-      setPicture(URL.createObjectURL(e.target.files[0]));
+      setPreview(URL.createObjectURL(e.target.files[0]));
+      //setPicture(e.target.files[0]);
+      setPicture({photo:e.target.files[0]});
     } else {
       return false;
     }
@@ -56,6 +64,9 @@ const Profile = () => {
     */
     setPlayerProfile(tempPlayers);
     setUpdateProfile({ ...updateProfile, [e.target.name]: e.target.value }); // this is added just to see if its working
+    setProfile({ ...profile, [e.target.name]: e.target.value });
+    //setPicture(e.target.files[0]);
+    setPicture({photo:e.target.files[0]});
   };
 
   useEffect(() => {
@@ -74,14 +85,29 @@ const Profile = () => {
   }, []);
 
   const onSubmit = () => {
+
     setDisabled(disabled);
+    const formData = new FormData();
+
+    for(let key in updateProfile) {
+      formData.append(key,updateProfile[key]);
+    }
+
+    if (picture) formData.append("photo", picture);
+
+    const config = {
+      headers: {
+          'content-type': 'multipart/form-data' // <-- Set header for 
+      }
+    }
+
     const fetchData = async () => {
       try {
         const params = {
           email: loginUserEmail,
         };
-        const data = {photo: updateProfile.photo, name: updateProfile.name, email: updateProfile.email, phonenumber: updateProfile.phonenumber, position: updateProfile.position, password: updateProfile.password}
-        const res = await Axios.put('http://localhost:8000/service/profile', data, {params}); 
+        //const data = {photo: updateProfile.photo, name: updateProfile.name, email: updateProfile.email, phonenumber: updateProfile.phonenumber, position: updateProfile.position, password: updateProfile.password}
+        const res = await Axios.put('http://localhost:8000/service/profile', formData, {params}, config); 
         console.log("Front End update message:" + res.data.success);
         if (res.data.success) {
           setIsSent(true);
@@ -102,7 +128,7 @@ const Profile = () => {
     <div className="register_wrapper">
       <div className="register_player_column_layout_one">
         <div className="register_player_Twocolumn_layout_two">
-          <form onSubmit={handleSubmit(onSubmit)} className="myForm">
+          <form onSubmit={handleSubmit(onSubmit)} className="myForm" encType="multipart/form-data">
             {
               playerProfile.map(({ id, photo, name, email, phonenumber, position, privilege, password }) => (
                 <div key={id}>

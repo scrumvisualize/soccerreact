@@ -118,10 +118,11 @@ const Aboutus = () => {
             </div>
             <div className="layout">
               <span className="col col-main">
-              <img alt="" src="/images/image-1.jpg"></img>
+              <img className="leftsideTopYellowImage" alt="" src="/images/image-1.jpg"></img>
               </span> 
-              <span className="col col-newsarea">
-                <h3>&#9917; Updates !</h3>
+              
+              <span className="col col-newsarea"> 
+              <h3 className="updatesHeader">&#9917; Updates !</h3>
                 {
                 displaynewsDetails.map(( {id, newstitle, newsdetails , createdAt} ) => (
                 <span  key={id} className="newsPlace">
@@ -286,7 +287,6 @@ const Aboutus = () => {
                           <div className="services-iconbox"><i className="lnr lnr-earth"></i></div>
                           <h2>Soccer Gears</h2>
                           <p>Who doesn't like to have a pair of new boots ! All of us would like to wrap ourself with new gadgets &amp; gears </p>
-                          <p>Any offers near by please let us know ! </p>
                         </div>
                       </div>
                     </div>

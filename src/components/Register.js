@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from 'axios'
 import { useForm } from 'react-hook-form';
 import { useHistory } from "react-router-dom";
+import UserRegisterContext from '../context';
 
 
 const Register = () => {
 
   const [preview, setPreview] = useState('');
   const [picture, setPicture] = useState('');
+  //const {picture, setPicture} = useContext(UserRegisterContext);
   const [formRegister, setRegister] = useState({ _id: '', photo: '', name: '', email: '', phonenumber: '', position: '', privilege: '', password: '' })
   const [isSent, setIsSent] = useState(false);
   const [helperText, setHelperText] = useState('');
@@ -25,6 +27,7 @@ const Register = () => {
       //setPicture(URL.createObjectURL(e.target.files[0]));
       setPreview(URL.createObjectURL(e.target.files[0]));
       setPicture(e.target.files[0]);
+      //setPicture({photo:e.target.files[0]});
       setRegister({ ...formRegister, [e.target.name]: e.target.value });
     } else {
       return false;
@@ -42,19 +45,19 @@ const Register = () => {
   }
   
 const onSubmit = e => {
-const formData = new FormData();
+  const formData = new FormData();
 
-for(let key in formRegister) {
-  formData.append(key,formRegister[key]);
-}
+  for(let key in formRegister) {
+    formData.append(key,formRegister[key]);
+  }
 
-if (picture) formData.append("photo", picture);
+  if (picture) formData.append("photo", picture);
 
-const config = {
+  const config = {
     headers: {
-        'content-type': 'multipart/form-data' // <-- Set header for 
+        'content-type': 'multipart/form-data' 
     }
-}
+  }
     const fetchData = async () => {
       try {
         const res = await axios.put('http://localhost:8000/service/player', formData, config);
@@ -146,12 +149,17 @@ const config = {
               </label>
               <label>
                 <div className="select" >
-                  <select defaultValue={'DEFAULT'} name="privilege" id="select" onChange={onChange}>
-                    <option value="DEFAULT" disabled>Choose an option</option>
+                  <select defaultValue={'DEFAULT'} name="privilege" id="select" 
+                  onChange={onChange}
+                  ref={register({
+                    required: "Role is required",
+                  })}
+                  > <option value="DEFAULT" disabled>Choose an option</option>
                     <option value="player">PLAYER</option>
                     <option value="admin">ADMIN</option>
                   </select>
                 </div>
+                <span className="registerErrorTextFormat">{errors.privilege && errors.privilege.message}</span>
               </label>
               <label>
                 <input className="inputRequest formContentElement" name="password" type="password" placeholder="eg: P@ssW0rd"
