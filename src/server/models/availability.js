@@ -1,19 +1,17 @@
-/* jshint indent: 1 */
 'use strict';
-module.exports = (sequelize, DataTypes) => {
-    const user = sequelize.define('user', {
-        name: {
-            type: DataTypes.STRING(30),
-            allowNull: false
-        },
+module.exports =  (sequelize, DataTypes) => {
+    const availability = sequelize.define('availability', {
         email: {
             type: DataTypes.STRING(100),
             allowNull: false
 
         },
-        phonenumber: {
+        dailystatus: {
             type: DataTypes.STRING(50),
-
+            allowNull: false
+        },
+        user_id: {
+            type: DataTypes.INTEGER(18)
         },
         id: {
             type: DataTypes.INTEGER(10),
@@ -21,23 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        password: {
-            type: DataTypes.STRING(50),
-            allowNull: false
-        },
-        privilege: {
-            type: DataTypes.STRING(100),
-
-        },
-        photo: {
-            type: DataTypes.STRING(300),
-
-        },
-        position: {
-            type: DataTypes.STRING(100),
-
-		},
-		createdAt: {
+        createdAt: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW
@@ -49,17 +31,15 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {
         timestamps: false,
-        tableName: 'user'
+        tableName: 'availability'
     });
-
-    user.associate = function (models) {
+    availability.associate = function (models) {
         // associations can be defined here
-        user.hasOne(models.availability, {
+        availability.belongsTo(models.user, {
             foreignKey: 'user_id',
-            targetKey: 'id',
+            sourceKey: 'id',
             onDelete: "CASCADE"
         });
     };
-
-    return user;
-};
+    return availability;
+}

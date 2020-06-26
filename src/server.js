@@ -2,9 +2,11 @@ const express = require('express');
 const bodyParser = require("body-parser");
 var multer  = require('multer')
 var path = require('path');
+const moment = require('moment');
 const { Sequelize, DataTypes } = require("sequelize");
 const userSchema = require('./server/models/user');
 const newsSchema = require('./server/models/news');
+const availabilitySchema = require('./server/models/availability');
 const cors = require("cors");
 
 const port = 8000;
@@ -32,6 +34,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
 
 const UserModel = userSchema(sequelize, DataTypes);
 const NewsModel = newsSchema(sequelize, DataTypes);
+const Availability = availabilitySchema(sequelize, DataTypes);
 
 app.use(cors({
   origin: "http://localhost:3000"
@@ -227,9 +230,10 @@ app.post('/service/login', async (req, res) => {
     }
     const password = loginData[0].password;
     const email = loginData[0].email;
+    const photo = loginData[0].photo;
     if (password === userPassword && email === userEmail) {
       const privilege = loginData[0].privilege;
-      res.status(200).json({ success: true, privilege, email });
+      res.status(200).json({ success: true, privilege, email, photo });
     } else {
       res.status(403).json({ fail: "Incorrect password entered !" });
     }
@@ -283,11 +287,40 @@ app.delete('/service/news', async (req, res) => {
   }
 });
 
+//This is to insert daily availability of players from Availability page by all player/users:
 
+app.post('/service/availability', async (req, res) => {
+
+  try {
+    const userEmail = req.query.email;
+    const dailyStatus =  req.body.dailystatus;
+    var playerData = {email:userEmail, dailystatus: dailyStatus};
+    const playerDailyStatus = await Availability.create(playerData);
+    res.status(200).json({ success: true });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+
+});
+
+//This is to get availability details of a player from availability table, join query to get photo and position details from user table:
+//Same set of data will be used to display player data in teams section:
+
+app.get('/service/availability', async (req, res) => {
+  try {
+    //var today = moment().format('YYYY-MM-DD HH:mm:ss');
+    const dailyStatus = await sequelize.query("SELECT user.id, user.photo, user.position, availability.dailystatus FROM user INNER JOIN availability ON user.id = availability.id", null, { raw: true});
+    res.status(200).json({ dailyStatus });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+  
+});
 
 (async () => {
   try {
     const sequelizeStatus = await sequelize.sync();
+    //sequelize.sync({ force: true })
     console.log("your server is up and running");
     app.listen(port, () => console.log(`Listening on port ${port}`));
   } catch (e) {

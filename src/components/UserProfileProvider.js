@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, useState} from 'react';
-import UserProfileContext from '../context';
+import { UserProfileContext, UserLoginContext } from '../context';
 
 const UserProfileProvider = ({children}) => {
 

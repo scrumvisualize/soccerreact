@@ -19,9 +19,20 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: false,
 			primaryKey: true,
 			autoIncrement: true
-		}
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW
+        }
     
     },{
+        timestamps: false,
         tableName: 'news'
     });
 }

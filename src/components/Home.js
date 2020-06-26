@@ -104,7 +104,7 @@ const Home = () => {
     <div className="App">
       <div className="wrapper">
         <div className="playerList_header">
-          <h1>Players</h1>
+          <h2>Players</h2>
           <label>
             <div className="playerSearch_Home">
               <div className="playerSearch_Icon">

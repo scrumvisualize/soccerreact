@@ -2,18 +2,17 @@ import React, {useContext, useEffect, useState } from "react";
 import { useForm } from 'react-hook-form';
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
-import UserProfileContext from '../context';
+import { UserProfileContext, UserLoginContext } from '../context';
 
 
 const Profile = () => {
 
-  //const {photo, setPhoto} = useContext(UserProfileContext);
   const [preview, setPreview] = useState('');
-  //const [picture, setPicture] = useState('');
-  const {picture, setPicture} = useContext(UserProfileContext);
+  const [picture, setPicture] = useState('');
+  //const {picture, setPicture} = useContext(UserProfileContext);
   const [playerProfile, setPlayerProfile] = useState([]);
   const loginUserEmail = localStorage.getItem('loginEmail');
-  const {profile, setProfile} = useContext(UserProfileContext);
+  //const {profile, setProfile} = useContext(UserProfileContext);
   const [updateProfile, setUpdateProfile] = useState({ _id: '', photo: '', name: '', email:'', phonenumber:'', position:'', privilege:'', password:''});
   const [isSent, setIsSent] = useState(false);
   const [helperText, setHelperText] = useState('');
@@ -26,8 +25,9 @@ const Profile = () => {
     console.log('picture: ', picture);
     if (e.target.files.length) {
       setPreview(URL.createObjectURL(e.target.files[0]));
-      //setPicture(e.target.files[0]);
       setPicture({photo:e.target.files[0]});
+      //setPicture(e.target.files[0]);
+      setUpdateProfile({photo:e.target.files[0]});
     } else {
       return false;
     }
@@ -63,10 +63,7 @@ const Profile = () => {
     });
     */
     setPlayerProfile(tempPlayers);
-    setUpdateProfile({ ...updateProfile, [e.target.name]: e.target.value }); // this is added just to see if its working
-    setProfile({ ...profile, [e.target.name]: e.target.value });
-    //setPicture(e.target.files[0]);
-    setPicture({photo:e.target.files[0]});
+    setUpdateProfile({ ...updateProfile, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
@@ -138,7 +135,7 @@ const Profile = () => {
                       <input id="profilePic" name="photo" type="file" onChange={onChangePicture} />
                     </div>
                     <div className="previewProfilePic" >
-                      <img alt="" onError={addDefaultSrc} name="previewImage" className="playerProfilePic_home_tile" src={photo} onChange={e => handleChange(e, id)}></img>
+                      <img alt="" onError={addDefaultSrc} name="previewImage" className="playerProfilePic_home_tile" src={photo}></img>
                     </div>
                   </div>
                   <div className="fillContentDiv formElement">

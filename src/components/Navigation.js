@@ -1,15 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import UserProfileContext from '../context';
-
+import { UserProfileContext, UserLoginContext } from '../context';
 
 const Navigation = () => {
 
     const history = useHistory();
     const [imageSrc, setImgSrc] = useState(null);
+    const [loginImgSrc, setLoginImgSrc] = useState(null);
     const { picture } = useContext(UserProfileContext);
+    const { loginPhoto } = useContext(UserLoginContext);
+    const [showMenu, setShowMenu] = useState({show: false})
+    const fs = require('fs');
     
+    const imgData = loginPhoto.photo || localStorage.getItem("imgData");
 
+    console.log("Login user image from Nav:"+imgData);
+
+  
     useEffect(() => {
         if (picture.photo) {
             const reader = new FileReader();
@@ -24,6 +31,7 @@ const Navigation = () => {
 
     var dataImage = localStorage.getItem('imgData');
 
+    
     const divStyle = {
         float: 'left',
         color: '#64cad8',
@@ -47,10 +55,20 @@ const Navigation = () => {
                         <div className="clubLogo landing" style={divStyle}><b>Southside Soccer</b></div>
                         <NavLink className="mobile_register_link" to="/">Home</NavLink>
                         <NavLink className="mobile_register_link" to="/profile">Profile</NavLink>
+                        <NavLink className="mobile_register_link" to="/availability">Availability</NavLink>
                         <NavLink className="mobile_login_link" to="/login" onClick={logout}>Logout</NavLink>
-                        <NavLink className="mobile_login_link" to='/aboutus'>About us</NavLink>
-                        <span className="image_login_link"><img className="nav_profile" src={dataImage}></img></span>
+                        <NavLink className="mobile_login_link" to='/aboutus'>About</NavLink>
+                        <span className="image_login_link">
+                            <img className="nav_profile" onClick={()=>setShowMenu(!showMenu)} src={imgData}></img>
+                        </span>
                     </nav>
+                    <div>
+                    {
+                       showMenu === true && (     
+                        <span className="imagehoverPopup">&#128077; G'day mate !</span>  
+                        )
+                    }
+                    </div>
                 </div>
             </div>
         </div>

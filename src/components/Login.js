@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from 'react-hook-form';
 import { useHistory } from "react-router-dom";
-import UserProfileContext from '../context';
+import { UserProfileContext, UserLoginContext } from '../context';
 
 const Login = () => {
-  const {loginPhoto, setLoginPhoto} = useContext(UserProfileContext);
+
   const [loginData, setLoginData] = useState([]);
+  const {loginPhoto, setLoginPhoto} = useContext(UserLoginContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [helperText, setHelperText] = useState('');
@@ -15,19 +16,24 @@ const Login = () => {
   const history = useHistory();
   const { handleSubmit, register, errors } = useForm();
 
+
+
+  
   const onSubmit = () => {
     const fetchData = async () => {
       try {
         const res = await axios.post('http://localhost:8000/service/login', { email, password });
-        //setLoginData(res.data.loginData); 
+        //setLoginData(res.data.loginData);  
         console.log("Front End success message:" + res.data.success);
+        console.log("My Photo Data:" + res.data.photo);
+        setLoginPhoto({ photo: res.data.photo });
         if (res.data.success) {
-          setHelperText("Login successfully");
           setValue(res.data.privilege);
           localStorage.setItem('Privilege', res.data.privilege);
           localStorage.setItem('loginEmail', email);
+          localStorage.setItem("imgData", res.data.photo);
           history.push('/')
-          window.location.reload(true)
+          window.location.reload(true) 
         }
         else {
           const failMessage = res.data.fail;

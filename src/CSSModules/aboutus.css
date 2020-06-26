@@ -61,7 +61,7 @@
   }
   .newsPlace{
     display: block;
-    width:97%;
+    width:99%;
     margin-top: 10px;
     margin-left: 100px;
     padding-right: 5px;
@@ -72,6 +72,22 @@
     transition: .3s;
     overflow: auto;
     background-color: #f7f7f7;
+  }
+  @media screen and (max-width: 500px) {
+    .newsPlace{
+      display: block;
+      width:95%;
+      margin-top: 10px;
+      margin-left: 100px;
+      padding-right: 5px;
+      text-decoration: none;
+      margin: 20px 10px 0 10px;
+      border: solid 1px #f2f2f2;
+      box-shadow: 0 2px 1px 0 rgba(88, 87, 87, 0.5);
+      transition: .3s;
+      overflow: auto;
+      background-color: #f7f7f7;
+    }
   }
  
   .specialAboutus_data_1, .col-main h3, .joinAboutus_data_1, .col-complementary h3 {
@@ -143,7 +159,7 @@
 }
 .deleteNewsImg{
   display: flex;
-  margin-left: 910px;
+  margin-left: 930px;
   margin-top: 15px;
   height:30px;
   z-index:1000
@@ -152,7 +168,7 @@
 @media screen and (max-width: 1920px) {
   .deleteNewsImg{
     display: flex;
-    margin-left: 320px;
+    margin-left: 830px;
     margin-top: 0px;
     height:30px;
     position: relative;

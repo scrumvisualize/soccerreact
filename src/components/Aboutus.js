@@ -118,7 +118,7 @@ const Aboutus = () => {
             </div>
             <div className="layout">
               <span className="col col-main">
-              <img className="leftsideTopYellowImage" alt="" src="/images/image-1.jpg"></img>
+              <img className="leftsideTopYellowImage" alt="" src="/images/topImage.jpg"></img>
               </span> 
               
               <span className="col col-newsarea"> 
