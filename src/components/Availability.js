@@ -17,7 +17,7 @@ const Availability = () =>{
     const [dailyStatusPlayers, setDailyStatusPlayers] = useState([]);
     const [teamData, setTeamData] = useState([]);
     //const [dailyinput, setDailyInput] = useState('');
-    const [inCount, setInCount] = useState("");
+    const [inCount, setInCount] = useState([]);
     const isMounted = useRef(false);
     const c_day = moment().format('dddd');
     const c_date = moment().format('DD-MM-YYYY');
@@ -43,7 +43,7 @@ const Availability = () =>{
               console.log(dailyStatus);
               setTeamData(dailyStatus);
               setTeams(dailyStatus);
-               
+              setCount(dailyStatus);
             }
           } catch (e) {
             console.log(e);
@@ -78,6 +78,10 @@ const Availability = () =>{
     setTeam1(tempTeam1.filter(status => status.dailystatus === "in"));
     setTeam2(tempTeam2.filter(status => status.dailystatus === "in"));
   };
+
+  const setCount = data =>{
+    setInCount(data.filter(e => e.dailystatus === "in").length);
+  }
    
     const onSubmit = (dailyinput) =>{
         console.log("Here Daily:"+ dailyinput);
@@ -130,7 +134,7 @@ const Availability = () =>{
           <div className="displayCurrentDate">
             <b>{c_day}</b>, {c_date}
           </div>
-         <h4>In: <span className="displayInCount">20</span></h4>
+    <h4><span className="displayInCount">{inCount}</span></h4>
             <div className="wrap">
                 <div className="container">
                     <div className="dailystatus_section">
