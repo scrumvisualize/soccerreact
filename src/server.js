@@ -256,6 +256,7 @@ app.post('/service/news', async (req, res) => {
   }
 });
 
+
 //This is to get News details from news table and to display in Aboutus page:
 app.get('/service/news', async (req, res) => {
   try {
@@ -300,7 +301,23 @@ app.post('/service/availability', async (req, res) => {
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
+});
 
+//This is to udpate daily availability of players from Availability page by players:
+app.put('/service/availability', async (req, res) => {
+
+  try {
+    const userEmail = req.query.email;
+    const dailyStatus =  req.body.dailystatus;
+    var selector = {
+      where: { email: userEmail }
+    };
+    var updateData = {dailystatus:dailyStatus};
+    const playerDailyStatus = await Availability.update(updateData, selector);
+    res.status(200).json({ success: true });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
 });
 
 //This is to get availability details of a player from availability table, join query to get photo and position details from user table:

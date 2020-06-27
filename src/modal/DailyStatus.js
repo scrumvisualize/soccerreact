@@ -11,7 +11,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import axios from 'axios'
 
-export default function DailyStatusDialog({ open, onClose, onSubmit}) {
+export default function DailyStatusDialog({ open, onClose, onSubmit, onUpdate}) {
 
     const [dailyinput, setDailyInput] = useState('');
 
@@ -43,7 +43,7 @@ export default function DailyStatusDialog({ open, onClose, onSubmit}) {
         <Button onClick={onClose} color="primary">
             Cancel
             </Button>
-            <Button onClick={() => onSubmit(dailyinput)} color="primary" autoFocus>
+            <Button onClick={() => onSubmit(dailyinput)} onClick={() => onUpdate(dailyinput)}color="primary" autoFocus>
             Save
         </Button>
       </DialogActions>

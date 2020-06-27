@@ -59,6 +59,7 @@ const Availability = () =>{
     let copyOfTeamData = [...data];
 
     while (copyOfTeamData.length) {
+
       const random = Math.floor(Math.random() * copyOfTeamData.length);
 
       lastTeamSelected === 1
@@ -70,9 +71,12 @@ const Availability = () =>{
         ...copyOfTeamData.slice(random + 1)
       ];
       lastTeamSelected = (lastTeamSelected + 1) % 2;
+     
     }
-    setTeam1(tempTeam1);
-    setTeam2(tempTeam2);
+    //setTeam1(tempTeam1);
+    //setTeam2(tempTeam2);
+    setTeam1(tempTeam1.filter(status => status.dailystatus === "in"));
+    setTeam2(tempTeam2.filter(status => status.dailystatus === "in"));
   };
    
     const onSubmit = (dailyinput) =>{
@@ -83,7 +87,7 @@ const Availability = () =>{
                     email: loginUserEmail,
                 };
               const res = await axios.post('http://localhost:8000/service/availability', { dailystatus: dailyinput }, {params} );
-              console.log("Dailystatus update" + res.data.success);
+              console.log("Dailystatus Insert:" + res.data.success);
               if (res.data.success) {
                 setDeleteDialog(false);
               }
@@ -97,6 +101,29 @@ const Availability = () =>{
           }
           dailyStatus();
     }
+
+    const onUpdate = (dailyinput) =>{
+      console.log("Here Daily:"+ dailyinput);
+      const dailyStatus = async () => {
+          try {
+              const params = {
+                  email: loginUserEmail,
+              };
+            const res = await axios.put('http://localhost:8000/service/availability', { dailystatus: dailyinput }, {params} );
+            console.log("Dailystatus update:" + res.data.success);
+            if (res.data.success) {
+              setDeleteDialog(false);
+            }
+            else {
+              console.log(res.data.message);
+              setHelperText(res.data.message);
+            }
+          } catch (e) {
+            setHelperText(e.response.data.message);
+          }
+        }
+        dailyStatus();
+  }
 
     return (
         <div className="availability_wrapper">
@@ -167,6 +194,7 @@ const Availability = () =>{
             </div>
             <DailyStatusDialog
               onSubmit={onSubmit}
+              onUpdate={onUpdate}
               open={deleteDialog}
               onClose={() => setDeleteDialog(false)}
             />

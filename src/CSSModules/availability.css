@@ -126,12 +126,15 @@
       text-align: center;
     }
     .dailstatus{
+      width: 100%;
       display: flex;
       margin: 30px 10px 10px 50px;
     }
     .dailstatus_playerposition{
       display: flex;
+      width: 100%;
       margin: 30px 10px 10px 50px;
+      text-align: left;
     }
     
   }
@@ -163,10 +166,21 @@
     height:40px;
     color: rgb(246, 248, 248);
     border-color: seashell;
-    margin-left: 5px;
+    margin-left: 50px;
     margin-bottom: 500px;
   }
 
+  @media screen and (max-width: 500px) {
+    .OverlayDailyStatus{
+      background-color: #30b495;
+      width:80px;
+      height:40px;
+      color: rgb(246, 248, 248);
+      border-color: seashell;
+      margin-left: 4px;
+      margin-bottom: 500px;
+    }
+  }
   .left_col {
     float: left;
     width: 100px;
