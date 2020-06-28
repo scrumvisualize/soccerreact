@@ -27,7 +27,6 @@ const Aboutus = () => {
   }, []);
 
 
-  
   useEffect(()=>{
     displayNewsSection(privilege);
     displayNewsDeleteBtn(privilege);
@@ -120,7 +119,6 @@ const Aboutus = () => {
               <span className="col col-main">
               <img className="leftsideTopYellowImage" alt="" src="/images/topImage.jpg"></img>
               </span> 
-              
               <span className="col col-newsarea"> 
               <h3 className="updatesHeader">&#9917; Updates !</h3>
                 {
@@ -153,8 +151,6 @@ const Aboutus = () => {
                   to let the tech team have some time to fix
                   this issue. Bye for now!
                   The Team
-
-                  
                 </span>
               </span> 
               <span className="col col-complementary">
@@ -295,7 +291,6 @@ const Aboutus = () => {
               </section>
             <footer className="footerClass">Copyright @ 2020</footer>
           </div>
-          
         )
 }
 

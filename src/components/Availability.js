@@ -163,7 +163,7 @@ const Availability = () =>{
                                     <div className="left_col">
                                         {
                                           team1.map(({id, photo, position}) =>(
-                                          <div className="row">
+                                          <div key={id} className="row">
                                             <div key={id} className="playerteamrecord_main">
                                               <img className="teamAPhoto" key={photo} src={photo}></img>
                                               <span className="teamAposition" key={position}>{position}</span>
@@ -175,7 +175,7 @@ const Availability = () =>{
                                     <div className="right_col">
                                         {
                                           team2.map(({id, photo, position})=>(
-                                          <div className="row">
+                                          <div key={id} className="row">
                                             <div key={id} className="playerteamrecord_two">
                                               <img className="teamBPhoto" key={photo} src={photo}></img>
                                               <span className="teamBposition" key={position}>{position}</span>

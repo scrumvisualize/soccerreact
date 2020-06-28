@@ -52,7 +52,7 @@ const Navigation = () => {
             <div className="wrapper">
                 <div id="wrap">
                     <nav className="siteNavigation_nav_links">
-                        <div className="clubLogo landing" style={divStyle}><b>Southside Soccer</b></div>
+                        <div className="clubLogo landing" style={divStyle}><img className="clublogomain"src="images/sss.png"></img></div>
                         <NavLink className="mobile_register_link" to="/">Home</NavLink>
                         <NavLink className="mobile_register_link" to="/profile">Profile</NavLink>
                         <NavLink className="mobile_register_link" to="/availability">Availability</NavLink>
