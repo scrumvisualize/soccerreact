@@ -117,6 +117,7 @@ const Availability = () =>{
             console.log("Dailystatus update:" + res.data.success);
             if (res.data.success) {
               setDeleteDialog(false);
+              window.location.reload(true) 
             }
             else {
               console.log(res.data.message);
@@ -154,6 +155,9 @@ const Availability = () =>{
                             <button className="OverlayDailyStatus" onClick={displayAvailabilityStatus}>Enter</button>
                         </span>
                     </div>
+                    <label>
+                      <span className="availabilityErrorText">{helperText}</span>
+                    </label>
                 </div>
                 <div>
                     <div className="container">

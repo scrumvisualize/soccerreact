@@ -52,7 +52,8 @@ const Navigation = () => {
             <div className="wrapper">
                 <div id="wrap">
                     <nav className="siteNavigation_nav_links">
-                        <div className="clubLogo landing" style={divStyle}><img className="clublogomain"src="images/sss.png"></img></div>
+                        <div className="row" style={divStyle}><img className="clublogomain"src="images/soccer.png"></img></div>
+                        <div className="main_links_nav">
                         <NavLink className="mobile_register_link" to="/">Home</NavLink>
                         <NavLink className="mobile_register_link" to="/profile">Profile</NavLink>
                         <NavLink className="mobile_register_link" to="/availability">Availability</NavLink>
@@ -61,6 +62,7 @@ const Navigation = () => {
                         <span className="image_login_link">
                             <img className="nav_profile" onClick={()=>setShowMenu(!showMenu)} src={imgData}></img>
                         </span>
+                        </div>
                     </nav>
                     <div>
                     {

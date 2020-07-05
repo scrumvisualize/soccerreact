@@ -66,9 +66,8 @@
     height:200px;
     margin-top: 10px;
     margin-left: 100px;
-    padding: 5px;
     text-decoration: none;
-    margin: 20px 0px 0 10px;
+    margin: 20px 10px 0 10px;
     border: solid 1px #f2f2f2;
     box-shadow: 0 2px 1px 0 rgba(88, 87, 87, 0.5);
     transition: .3s;

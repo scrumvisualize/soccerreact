@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useForm } from 'react-hook-form';
 import { useHistory } from "react-router-dom";
 import UserRegisterContext from '../context';
+import { Checkbox } from "@material-ui/core";
 
 
 const Register = () => {
@@ -10,8 +11,9 @@ const Register = () => {
   const [preview, setPreview] = useState('');
   const [picture, setPicture] = useState('');
   //const {picture, setPicture} = useContext(UserRegisterContext);
-  const [formRegister, setRegister] = useState({ _id: '', photo: '', name: '', email: '', phonenumber: '', position: '', privilege: '', password: '' })
+  const [formRegister, setRegister] = useState({ _id: '', photo: '', name: '', email: '', phonenumber: '', position: '', privilege: '', password: '', token: ''})
   const [isSent, setIsSent] = useState(false);
+  const [checked, setChecked] = useState(false);
   const [helperText, setHelperText] = useState('');
   const { handleSubmit, register, errors } = useForm();
   const [isError, setIsError] = useState(false);
@@ -43,7 +45,7 @@ const Register = () => {
     e.persist();
     setRegister({ ...formRegister, [e.target.name]: e.target.value });
   }
-  
+
 const onSubmit = e => {
   const formData = new FormData();
 
@@ -139,6 +141,7 @@ const onSubmit = e => {
                 onChange={onChange} 
                 maxLength={30}
                 ref={register({
+                  required: "Position is required",
                   pattern: {
                     value: /^[a-zA-Z\s]{2,30}$/,
                     message: "Position should have minimum of 2 letters"
@@ -179,6 +182,32 @@ const onSubmit = e => {
             </div>
             <label>
               <span className="registerValidationText">{helperText}</span>
+            </label>
+            <label>
+              <input type="checkbox" name="tokencheck" onChange={() => setChecked(!checked)} checked={checked}
+              ref={register({
+                required: "Please click to enable token field"
+                })
+               }
+              />
+              {
+             checked ? (
+             <input className="inputRequest formContentElement" name="token" type="text" placeholder="token"
+             onChange={onChange} 
+             minLength={8}
+             maxLength={25}
+             ref={register({
+               required: "Valid token is required !",
+               pattern: {
+                 value: /^[a-zA-Z0-9!@#$&()\\-`.+,/\"]*$/,
+                 message: "Token should include alphanumeric and special characters!"
+               }
+             })}
+             />
+               ) : (<div></div>)
+              }
+              <span className="registerErrorTextFormat">{errors.tokencheck && errors.tokencheck.message}</span>
+              <span className="registerErrorTextFormat">{errors.token && errors.token.message}</span>
             </label>
             <div className="submitButtonDiv formElement" style={{ margin: isError ? '65px 0 20px 0' : '20px 0 20px 0' }}>
               <button type="submit" className="submitButton">Register</button>

@@ -88,6 +88,7 @@
   }
   .dailstatus_playerImage{
     height:50px;
+    width:50px;
     border-radius: 25px;
     margin-top: 10px;
     margin-bottom: 5px;
@@ -312,4 +313,9 @@
       margin: 15px 0px 0px 15px;
     }
     
+  }
+
+  .availabilityErrorText{
+    background-color:#ce4b61;
+    color:#ffffff;
   }

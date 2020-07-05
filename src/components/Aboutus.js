@@ -66,6 +66,7 @@ const Aboutus = () => {
         if (res.data.success) {
           setIsSent(true); 
           reset();
+          window.location.reload(true);
         }
         else {
           console.log(res.data.message);
@@ -173,14 +174,14 @@ const Aboutus = () => {
             </div>
             <h2>Core <span>Team:</span></h2>
             <div className='app-layout'>
-              <div className='box tweets'>1</div>
-              <div className='box replies'>2</div>
-              <div className='box search'>3</div>
-              <div className='box messages'>4</div>
+              <div className='box tweets'>President</div>
+              <div className='box replies'>Vice-president</div>
+              <div className='box search'>Secretary</div>
+              <div className='box messages'>Joint Secretary</div>
             </div>
             <div className='app-layout'>
-              <div className='box tweets'>1</div>
-              <div className='box replies'>2</div>
+              <div className='box tweets'>Treasurer</div>
+              <div className='box replies'>Joint Treasurer</div>
               <div className='box search'>3</div>
               <div className='box messages'>4</div>
             </div>
@@ -188,12 +189,12 @@ const Aboutus = () => {
             showNewsSection.show && (
             <div className="layout">
               <span className="addTeamNews">
-                <h3>Enter team news !</h3>
+                <h3>Enter team updates !</h3>
                 <span className="specialAboutus_data_1">
                   <form onSubmit={handleSubmit(onSubmit)} className="myFormAbouts">
                     <div className="newsfillContentDiv formElement">
                       <label>
-                        <input name="newstitle"  className="inputRequest formContentElement" type="text" placeholder="title" 
+                        <input name="newstitle"  className="inputRequest formContentElement" type="text" autoComplete="off" placeholder="title" 
                         onChange={onChange}
                         minLength={4}
                         maxLength={50}
@@ -204,7 +205,7 @@ const Aboutus = () => {
                         <span className="newsErrorTextFormat">{errors.newstitle && errors.newstitle.message}</span>
                       </label>
                       <label>
-                        <textarea name="newsdetails" className="inputRequest formContentElement" type="textarea"  placeholder="news details" 
+                        <textarea name="newsdetails" className="inputRequest formContentElement" type="textarea"  autoComplete="off" placeholder="news details" 
                         onChange={onChange}
                         minLength={10}
                         maxLength={1200}

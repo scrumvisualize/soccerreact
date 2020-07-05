@@ -81,6 +81,7 @@ app.get('/service/players', async (req, res) => {
 
 app.put('/service/player',  upload.single('photo'), async (req, res, next) => {
   try {
+    const regToken = req.body.token;
     const userName = req.body.name;
     const userEmail = req.body.email; //exisiting code
     const userPhone = req.body.phonenumber;
@@ -89,27 +90,31 @@ app.put('/service/player',  upload.single('photo'), async (req, res, next) => {
     const userPrivilegeUppercase = userPrivilege.toUpperCase();
     const userPosition = req.body.position;
     console.log(req.file);
-
+    const validToken = "SSSL@DSCLMV@LE2020#";
+    if( regToken == validToken ) {
     const playerEmail = await UserModel.count({ where: { email: userEmail } });
-    if (playerEmail == 0) {
-      
-      if(req.file){
-        var imageOriginalName = req.file.originalname;
-        var imageName = req.file.fieldname;
-        var imageMime = req.file.mimetype;
-        var imagePath = req.file.path;
-        var revisedPath = imagePath.replace(/^public\\/, '');  // Regx will remove the word public from file path.
-        var imageSize = req.file.size;
+      if (playerEmail == 0) {
+        
+        if(req.file){
+          var imageOriginalName = req.file.originalname;
+          var imageName = req.file.fieldname;
+          var imageMime = req.file.mimetype;
+          var imagePath = req.file.path;
+          var revisedPath = imagePath.replace(/^public\\/, '');  // Regx will remove the word public from file path.
+          var imageSize = req.file.size;
+      } else {
+          var imageName = "noimage.png";
+      }    
+        //If the email doesn't exists, procced with normal registration here...
+        var playerData = {name:userName, email:userEmail, phonenumber:userPhone, password:userPassword, privilege:userPrivilegeUppercase, photo: revisedPath, position: userPosition };
+        const addPlayer = await UserModel.create(playerData);
+        console.log("Server side PUT method log:" + addPlayer);
+        res.status(200).json({ success: true });
+      } else {
+        return res.status(409).json({ message: "Email address already exists !" });
+      }
     } else {
-        var imageName = "noimage.png";
-    }    
-      //If the email doesn't exists, procced with normal registration here...
-      var playerData = {name:userName, email:userEmail, phonenumber:userPhone, password:userPassword, privilege:userPrivilegeUppercase, photo: revisedPath, position: userPosition };
-      const addPlayer = await UserModel.create(playerData);
-      console.log("Server side PUT method log:" + addPlayer);
-      res.status(200).json({ success: true });
-    } else {
-      return res.status(409).json({ message: "Email address already exists !" });
+      return res.status(401).json({ message: "Invalid token provided, please contact admin !" });
     }
   } catch (err) {
     return next(err);
@@ -303,17 +308,26 @@ app.post('/service/availability', async (req, res) => {
   }
 });
 
-//This is to udpate daily availability of players from Availability page by players:
+//This is to update daily availability of players from Availability page by players:
 app.put('/service/availability', async (req, res) => {
 
   try {
     const userEmail = req.query.email;
     const dailyStatus =  req.body.dailystatus;
-    var selector = {
-      where: { email: userEmail }
-    };
-    var updateData = {dailystatus:dailyStatus};
+    const data = await UserModel.findAll({ where: { email: userEmail }, attributes: ['id', 'privilege'] });
+    const userId = data[0].id;
+    const userPrivilege = data[0].privilege;
+    const playerEmail = await Availability.count({ where: { email: userEmail } });
+    if(playerEmail == 0){
+    var createData = {email: userEmail, dailystatus:dailyStatus, user_id: userId};
+    const playerDailyStatus = await Availability.create(createData);
+    } else {
+      var selector = {
+        where: { email: userEmail }
+      };
+    var updateData = {dailystatus:dailyStatus, user_id: userId};
     const playerDailyStatus = await Availability.update(updateData, selector);
+    }
     res.status(200).json({ success: true });
   } catch (e) {
     res.status(500).json({ message: e.message });
@@ -326,7 +340,7 @@ app.put('/service/availability', async (req, res) => {
 app.get('/service/availability', async (req, res) => {
   try {
     //var today = moment().format('YYYY-MM-DD HH:mm:ss');
-    const dailyStatus = await sequelize.query("SELECT user.id, user.photo, user.position, availability.dailystatus FROM user INNER JOIN availability ON user.id = availability.id", null, { raw: true});
+    const dailyStatus = await sequelize.query("SELECT user.id, user.photo, user.position, availability.dailystatus FROM user join availability ON user.id = availability.id WHERE DATE(availability.createdAt) = CURDATE() OR DATE(availability.updatedAt) = CURDATE();", null, { raw: true});
     res.status(200).json({ dailyStatus });
   } catch (e) {
     res.status(500).json({ message: e.message });

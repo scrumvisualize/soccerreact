@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: DataTypes.NOW
         }
     }, {
-        timestamps: false,
+        timestamps: true,
         tableName: 'user'
     });
 
