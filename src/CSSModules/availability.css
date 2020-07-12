@@ -48,7 +48,6 @@
   }
   @media screen and (max-width: 500px) {
     .playerdistribution_section{
-      width: 88%;
       height:400px;
       background-color: #f0f3f5;
     }
@@ -312,10 +311,25 @@
     .teamBposition{
       margin: 15px 0px 0px 15px;
     }
+   
     
   }
-
   .availabilityErrorText{
     background-color:#ce4b61;
     color:#ffffff;
   }
+  .weeklycount_graph_section button{
+    margin-left: 300px;
+  }
+
+  @media screen and (max-width: 500px) {
+    .weeklycount_graph_section button{
+      margin-left: 70px;
+    }
+
+  }
+
+  .weeklycount_graph_section DialogContent DialogContentText{
+    margin: 0 auto !important;
+  }
+

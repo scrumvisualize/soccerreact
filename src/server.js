@@ -7,6 +7,8 @@ const { Sequelize, DataTypes } = require("sequelize");
 const userSchema = require('./server/models/user');
 const newsSchema = require('./server/models/news');
 const availabilitySchema = require('./server/models/availability');
+const ratingSchema = require('./server/models/rating');
+
 const cors = require("cors");
 
 const port = 8000;
@@ -35,6 +37,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
 const UserModel = userSchema(sequelize, DataTypes);
 const NewsModel = newsSchema(sequelize, DataTypes);
 const Availability = availabilitySchema(sequelize, DataTypes);
+const RatingModel = ratingSchema(sequelize, DataTypes);
 
 app.use(cors({
   origin: "http://localhost:3000"
@@ -347,6 +350,36 @@ app.get('/service/availability', async (req, res) => {
   }
   
 });
+
+//This is to get all players from user table and randomly pick a player in front end for rating purpose in Availability screen:
+
+app.get('/service/allplayers', async (req, res) => {
+  try {
+    const players = await UserModel.findAll({
+      attributes: ['name', 'email', 'photo']
+    });
+    res.status(200).json({ players });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+
+});
+
+//This is to add/update rating of players :
+app.put('/service/playerrating', async (req, res) => {
+
+  try {
+    const userEmail = req.body.params.email;
+    const rating = req.body.params.ratingTotal;
+    const pEmail = req.body.params.playertorate;
+    var createData = {useremail: userEmail, playeremail: pEmail, totalrating: rating};
+    const playerRating = await RatingModel.create(createData);
+    res.status(200).json({ success: true });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+});
+
 
 (async () => {
   try {

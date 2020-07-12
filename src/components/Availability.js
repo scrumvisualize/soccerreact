@@ -1,13 +1,24 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useForm } from 'react-hook-form';
 import axios from 'axios'
 import DailyStatusDialog from "../modal/DailyStatus";
 import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Avatar from "@material-ui/core/Avatar";
+import Input from '@material-ui/core/Input';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import * as moment from 'moment';
 
 
 
 const Availability = () =>{
-  
+
+    const [ratePlyrEmail, setRatePlyrEmail] = useState('');
+    const [randPlayers, setRandPLayers] = useState([]);
     const [team1, setTeam1] = useState([]);
     const [team2, setTeam2] = useState([]);
     const [deleteDialog, setDeleteDialog] = useState(false);
@@ -16,8 +27,17 @@ const Availability = () =>{
     const loginUserEmail = localStorage.getItem('loginEmail');
     const [dailyStatusPlayers, setDailyStatusPlayers] = useState([]);
     const [teamData, setTeamData] = useState([]);
-    //const [dailyinput, setDailyInput] = useState('');
     const [inCount, setInCount] = useState([]);
+    const [rating, setRating] = useState({
+      shooting: "",
+      dribbling: "",
+      ballcontrol: "",
+      sprinting: "",
+      fitness: ""
+    });
+    const [ratingTotal, setRatingTotal] = useState(0);
+    const [open, setOpen] = React.useState(false);
+    const { handleSubmit, register, errors } = useForm();
     const isMounted = useRef(false);
     const c_day = moment().format('dddd');
     const c_date = moment().format('DD-MM-YYYY');
@@ -83,7 +103,7 @@ const Availability = () =>{
     setInCount(data.filter(e => e.dailystatus === "in").length);
   }
    
-    const onSubmit = (dailyinput) =>{
+  const onSubmit = (dailyinput) =>{
         console.log("Here Daily:"+ dailyinput);
         const dailyStatus = async () => {
             try {
@@ -106,7 +126,7 @@ const Availability = () =>{
           dailyStatus();
     }
 
-    const onUpdate = (dailyinput) =>{
+  const onUpdate = (dailyinput) =>{
       console.log("Here Daily:"+ dailyinput);
       const dailyStatus = async () => {
           try {
@@ -130,13 +150,104 @@ const Availability = () =>{
         dailyStatus();
   }
 
-    return (
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  const onChange = e => {
+    e.persist();
+    const ratingValues = {
+      ...rating,
+      [e.target.name]: e.target.value
+    };
+    setRating(ratingValues);
+    ratingCalculation(ratingValues);
+  };
+
+  const ratingCalculation = ratingValues =>{
+    const {
+      shooting,
+      dribbling,
+      ballcontrol,
+      sprinting,
+      fitness
+    } = ratingValues;
+    const newTotal =
+      Number(shooting) +
+      Number(dribbling) +
+      Number(ballcontrol) +
+      Number(sprinting) +
+      Number(fitness);
+
+    const finalAvg = newTotal / 5;
+    setRatingTotal(finalAvg);
+    return ratingTotal ;
+  }
+
+  const calculateAvgRating = (rating) => {
+    const sendPlayerRating = async () => {
+
+      try {
+      const params = { email: loginUserEmail, ratingTotal: rating, playertorate: ratePlyrEmail}; 
+      const res = await axios.put('http://localhost:8000/service/playerrating', {params});
+      if (res.data.success) {
+        
+      }
+      else {
+        console.log(res.data.message); 
+      }
+
+      } catch (e) {
+        console.log(e.response.data.message);
+      }
+    }
+    sendPlayerRating();
+  };
+
+
+const setRandPlayerRating = () => {
+
+  const fetchPlayers = async () => {
+
+    try {
+      const res = await axios.get('http://localhost:8000/service/allplayers');
+      if (res.data) {
+        
+        getRandomPlayer(res.data.players);
+      }
+      else {
+        console.log(res.data.message);
+      }
+
+    } catch (e) {
+      console.log(e.response.data.message);
+    }
+  }
+  fetchPlayers();
+
+}
+
+const getRandomPlayer = data => {
+  const randomPlayer = [];
+  let copyOfPlayerData = [...data];
+  const random = Math.floor(Math.random() * copyOfPlayerData.length);
+  randomPlayer.push(copyOfPlayerData[random])
+  setRandPLayers(randomPlayer);
+  setRatePlyrEmail(randomPlayer[0].email);
+}
+
+return (
         <div className="availability_wrapper">
           <div className="displayCurrentDate">
             <b>{c_day}</b>, {c_date}
           </div>
-    <h4><span className="displayInCount">{inCount}</span></h4>
-            <div className="wrap">
+            <h4><span className="displayInCount">{inCount}</span></h4>
+             <div className="wrap">
                 <div className="container">
                     <div className="dailystatus_section">
                         <span className="playerdailyrecord">
@@ -155,9 +266,9 @@ const Availability = () =>{
                             <button className="OverlayDailyStatus" onClick={displayAvailabilityStatus}>Enter</button>
                         </span>
                     </div>
-                    <label>
+                  <label>
                       <span className="availabilityErrorText">{helperText}</span>
-                    </label>
+                  </label>
                 </div>
                 <div>
                     <div className="container">
@@ -193,9 +304,85 @@ const Availability = () =>{
                     </div>
                     <div className="container">
                         <div className="weeklycount_graph_section">
-                                <span className="avail_newImageback">
-                                  <img className="avail_newsImagesection" src="images/greenplayer.png"></img>         
-                              </span>
+                          {/*<span className="avail_newImageback">
+                              <img className="avail_newsImagesection" src="images/greenplayer.png"></img>         
+                          </span>*/}
+                            <div>
+                              <Button className="playerRatingBtn" variant="outlined" color="primary" onClick={() => handleClickOpen(setRandPlayerRating())}>
+                                Enter Player Rating
+                              </Button>
+                              <Dialog
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="skills-area"
+                              >
+                              <DialogTitle id="skills-area">Rate the skills of a player</DialogTitle>
+                                <DialogContent>
+                                    {
+                                      randPlayers.map(({email, name, photo}) =>(
+                                        <DialogContentText key="id">
+                                          <Avatar alt="player" src={photo}/>
+                                          <DialogContentText>{email}</DialogContentText>
+                                          <Input  type="hidden" name="playertorate" value={email}></Input>
+                                        </DialogContentText>
+                                      ))
+                                    }
+                                  <TextField
+                                    autoFocus
+                                    onChange={onChange}
+                                    margin="dense"
+                                    name="shooting"
+                                    label="Soccer shooting"
+                                    type="text"
+                                    fullWidth
+                                  />
+                                  <TextField
+                                    autoFocus
+                                    onChange={onChange}
+                                    margin="dense"
+                                    name="dribbling"
+                                    label="Dribbling"
+                                    type="text"
+                                    fullWidth
+                                  />
+                                  <TextField
+                                    autoFocus
+                                    onChange={onChange}
+                                    margin="dense"
+                                    name="ballcontrol"
+                                    label="Ball Control"
+                                    type="text"
+                                    fullWidth
+                                  />
+                                  <TextField
+                                    autoFocus
+                                    onChange={onChange}
+                                    margin="dense"
+                                    name="sprinting"
+                                    label="Sprinting"
+                                    type="text"
+                                    fullWidth
+                                  />
+                                   <TextField
+                                    autoFocus
+                                    onChange={onChange}
+                                    margin="dense"
+                                    name="fitness"
+                                    label="Fitness"
+                                    type="text"
+                                    fullWidth
+                                  />
+                                </DialogContent>
+                                <DialogActions>
+                                  <Button onClick={handleClose} color="secondary">
+                                    Cancel
+                                  </Button>
+                                  <Button onClick={() => handleClose( calculateAvgRating( (ratingCalculation(rating)) ) )} color="primary">
+                                    Submit
+                                  </Button>
+                                </DialogActions>
+                              </Dialog>
+                            </div>
                         </div>
                     </div>
                 </div>
