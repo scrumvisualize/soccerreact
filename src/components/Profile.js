@@ -11,6 +11,7 @@ const Profile = () => {
   const [picture, setPicture] = useState('');
   //const {picture, setPicture} = useContext(UserProfileContext);
   const [playerProfile, setPlayerProfile] = useState([]);
+  const [playerRating, setPlayerRating] =useState([]);
   const loginUserEmail = localStorage.getItem('loginEmail');
   //const {profile, setProfile} = useContext(UserProfileContext);
   const [updateProfile, setUpdateProfile] = useState({ _id: '', photo: '', name: '', email:'', phonenumber:'', position:'', privilege:'', password:''});
@@ -19,6 +20,8 @@ const Profile = () => {
   const [disabled, setDisabled] = useState(true);
   const { handleSubmit, register, errors } = useForm();
   const history = useHistory();
+  const isMounted = false;
+
   
 
   const onChangePicture = e => {
@@ -81,6 +84,28 @@ const Profile = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const params = {
+          email: loginUserEmail,
+        };
+      const res = await Axios.get('http://localhost:8000/service/displayrating', {params});
+      const playerdata = res.data.playerrating[0];  
+      playerdata.forEach( function (data, index) {
+        if(loginUserEmail == data.playeremail) {
+          const rating = data.totalrating;
+          const finalrating = parseFloat(rating).toFixed(2);
+          setPlayerRating(finalrating);
+        }
+      });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchData();
+  },[]);
+
   const onSubmit = () => {
 
     setDisabled(disabled);
@@ -137,7 +162,15 @@ const Profile = () => {
                     <div className="previewProfilePic" >
                       <img alt="" onError={addDefaultSrc} name="previewImage" className="playerProfilePic_home_tile" src={photo}></img>
                     </div>
+                    {
+                      // playerRating.map(({id, totalrating }) => (
+                      // <span className="playerRating" key={totalrating}>Rating: {totalrating}</span>
+                      // ))
+                      <span className="playerRating"><b>Rating: </b> {playerRating}</span>
+                    }
+                    
                   </div>
+                  
                   <div className="fillContentDiv formElement">
                     <label>
                       <input className="inputRequest formContentElement" name="name" type="text" value={name} 

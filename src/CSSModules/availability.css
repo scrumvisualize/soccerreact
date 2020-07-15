@@ -333,3 +333,13 @@
     margin: 0 auto !important;
   }
 
+  .newsErrorTextFormat{
+    color: #eb2942;
+    background-color: #ffffff;
+    font-size: x-small;
+    height:1px;
+  }
+  .newsValidationText{
+    background-color:#ce4b61;
+    color:#ffffff;
+  }

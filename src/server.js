@@ -365,7 +365,7 @@ app.get('/service/allplayers', async (req, res) => {
 
 });
 
-//This is to add/update rating of players :
+//This is to add/update rating of players from Availability page via Enter Player Rating dialog:
 app.put('/service/playerrating', async (req, res) => {
 
   try {
@@ -375,6 +375,17 @@ app.put('/service/playerrating', async (req, res) => {
     var createData = {useremail: userEmail, playeremail: pEmail, totalrating: rating};
     const playerRating = await RatingModel.create(createData);
     res.status(200).json({ success: true });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+});
+
+//This is to display player rating in Profile page:
+
+app.get('/service/displayrating', async (req, res) => {
+  try {
+    const playerrating = await sequelize.query('select playeremail, AVG(totalrating) as totalrating from rating group by playeremail;')
+    res.status(200).json({ playerrating });
   } catch (e) {
     res.status(500).json({ message: e.message });
   }

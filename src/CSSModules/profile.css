@@ -59,9 +59,7 @@
   /*   flex-basis:100%; */
     width:90%;
   }
-  
-  
-  
+   
   .formInstructionsDiv{
     width:90%;
     padding:15px 0;
@@ -83,6 +81,18 @@
     font-size:1em;
     font-family: "ebrima";
   }
+  .playerRating {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color:  #a352aa;
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+    padding: 5px 2px 5px 10px;
+  }
+
   .fillContentDiv{
     display:flex;
     flex-direction:column;
