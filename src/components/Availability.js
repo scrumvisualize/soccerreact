@@ -334,7 +334,7 @@ const Availability = () => {
                       onChange={onChange}
                       margin="dense"
                       ref={register({
-                        required:"Shooting is required !"
+                        required:"Ball shooting is required !"
                       })}
                       name="shooting"
                       label="Shooting"
