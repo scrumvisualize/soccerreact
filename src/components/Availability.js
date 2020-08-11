@@ -11,6 +11,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+
 import * as moment from 'moment';
 
 
@@ -47,6 +48,7 @@ const Availability = () => {
     return () => isMounted.current = false;
   }, []);
 
+  
   const displayAvailabilityStatus = () => {
     setDeleteDialog(true);
   }
@@ -308,7 +310,6 @@ const Availability = () => {
                               <img className="avail_newsImagesection" src="images/greenplayer.png"></img>         
               </span>*/}
               <form className="ratingForm">
-              <div>
                 <Button className="playerRatingBtn" variant="outlined" color="primary" onClick={() => handleClickOpen(setRandPlayerRating())}>
                   Enter Player Rating
                 </Button>
@@ -328,23 +329,22 @@ const Availability = () => {
                         </DialogContentText>
                       ))
                     }
-                    <label>
                     <TextField
                       autoFocus
                       onChange={onChange}
                       margin="dense"
+                      ref={register({
+                        required:"Shooting is required !"
+                      })}
                       name="shooting"
                       label="Shooting"
                       type="text"
                       fullWidth
                       min={1}
                       max={5}
-                      ref={register({
-                          required: "Soccer shotting skill is required !"
-                      })}
                     />
                     <span className="newsErrorTextFormat">{errors.shooting && errors.shooting.message}</span>
-                    </label>
+                    
                     <TextField
                       autoFocus
                       onChange={onChange}
@@ -386,12 +386,11 @@ const Availability = () => {
                     <Button onClick={handleClose} color="secondary">
                       Cancel
                     </Button>
-                    <Button type="submit" onClick={() => handleClose(calculateAvgRating((ratingCalculation(rating))))} color="primary">
+                    <Button type="submit" onClick={() => handleSubmit(handleClose(calculateAvgRating((ratingCalculation(rating)))))} color="primary">
                       Submit
                     </Button>
                   </DialogActions>
                 </Dialog>
-              </div>
             </form>
             </div>
           </div>

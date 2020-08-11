@@ -372,8 +372,25 @@ app.put('/service/playerrating', async (req, res) => {
     const userEmail = req.body.params.email;
     const rating = req.body.params.ratingTotal;
     const pEmail = req.body.params.playertorate;
+    const playerEmailCount = await RatingModel.count({ 
+      where: { 
+        useremail: userEmail,
+        playeremail : pEmail
+      } 
+    });
+    if(playerEmailCount == 0){
     var createData = {useremail: userEmail, playeremail: pEmail, totalrating: rating};
     const playerRating = await RatingModel.create(createData);
+    } else {
+      var selector = {
+        where: { 
+          useremail: userEmail,
+          playeremail : pEmail
+        }
+      };
+    var updateRatingData = {totalrating:rating};
+    const playerRatingUpdate = await RatingModel.update(updateRatingData, selector);
+    }
     res.status(200).json({ success: true });
   } catch (e) {
     res.status(500).json({ message: e.message });
