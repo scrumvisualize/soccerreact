@@ -282,25 +282,23 @@
 @media only screen and (max-width: 1920px) { 
 
   .deletePlayerButton{
-    position: absolute;
+    position: flex;
     width: 18px;
     height:18px;
     margin-left: 215px;
     margin-top: 123px;
   }
-  
-}
-@media only screen and (max-width: 400px) { 
 
-  .deletePlayerButton{
-    position: absolute;
-    width: 15px;
-    height:15px;
-    margin-left: 38px;
-    margin-top: 125px;
+  .loader {
+    display: flex;
+    position: relative;
+    margin-top: 50px;
+    margin-left: 600px;
   }
   
 }
+
+
 
 .loader {
   display: flex;
@@ -309,17 +307,8 @@
   margin-left: 980px;
 }
 
-@media only screen and (max-width: 1920px) { 
 
-  .loader {
-    display: flex;
-    position: relative;
-    margin-top: 50px;
-    margin-left: 890px;
-  }
-  
-}
-@media only screen and (max-width: 500px) { 
+@media only screen and (max-width: 480px) { 
 
   .loader {
     display: flex;
@@ -330,7 +319,7 @@
   
 }
 
-@media only screen and (max-width: 500px) { 
+@media only screen and (max-width: 480px) { 
 
   .bubble {
     animation: expand .75s ease-in-out infinite;
@@ -341,6 +330,16 @@
     width: 10px;
     height: 10px;
   }
+
+  
+  .deletePlayerButton{
+    position: absolute;
+    width: 15px;
+    height:15px;
+    margin-left: 50px;
+    margin-top: 122px;
+  }
+  
 
 }
 
@@ -397,3 +396,34 @@
 }
 
 
+
+@media only screen and (max-width: 1280px) { 
+
+  .loader {
+    display: flex;
+    position: absolute;
+    margin-left: 550px;
+    margin-top: 50px;
+  }
+
+  .deletePlayerButton{
+    position: absolute;
+    width: 15px;
+    height:15px;
+    margin-left: 145px;
+    margin-top: 125px;
+  }
+  
+}
+
+@media only screen and (max-width: 375px) { 
+
+  .deletePlayerButton{
+    position: absolute;
+    width: 15px;
+    height:15px;
+    margin-left: 45px;
+    margin-top: 122px;
+  }
+  
+}

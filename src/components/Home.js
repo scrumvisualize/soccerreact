@@ -104,7 +104,7 @@ const Home = () => {
     <div className="App">
       <div className="wrapper">
         <div className="bannerImage">
-            <img className="bannerTopImage" src="/images/players.png"></img>
+            <img className="bannerTopImage" src=""></img>
         </div>
         <div className="playerList_header">
           <h2>Players</h2>
